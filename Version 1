@@ -1,0 +1,2520 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Kumar+One&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #17151D; }
+  a { color: #f2eef0; text-decoration: none; }
+  a:hover { color: #ff9ec0; }
+  input::placeholder, textarea::placeholder { color: rgba(245,245,245,0.42); }
+  @keyframes seal-in { 0% { transform: scale(.4) rotate(-24deg); opacity: 0 } 62% { transform: scale(1.08) rotate(4deg); opacity: 1 } 100% { transform: scale(1) rotate(0deg); opacity: 1 } }
+  @keyframes seal-ring { 0% { transform: scale(.5); opacity: .8 } 100% { transform: scale(2.1); opacity: 0 } }
+  @keyframes rise-in { 0% { transform: translateY(16px); opacity: 0 } 100% { transform: translateY(0); opacity: 1 } }
+</style>
+</helmet>
+<div id="home" style="position: relative; width: 100%; min-height: 100vh; overflow: hidden; background: #17151D; font-family: 'DM Sans', Helvetica, sans-serif; isolation: isolate;">
+
+  <canvas ref="{{ blobRef }}" style="position: absolute; inset: -4%; width: 108%; height: 108%; filter: blur(7px); opacity: 0.2; pointer-events: none;"></canvas>
+
+  <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(141,51,71,0.92) 0%, rgba(92,40,54,0.72) 16%, rgba(23,21,29,0.5) 34%, rgba(23,21,29,0.3) 100%); pointer-events: none;"></div>
+
+  <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; pointer-events: none;">
+    <div style="flex: 0 0 auto; height: clamp(120px, 20vh, 230px);"></div>
+    <div style="flex: 0 0 auto; width: 100%; display: flex; justify-content: center;">
+      <canvas ref="{{ textRef }}" style="width: 100%; max-width: 1180px; height: clamp(160px, 31vh, 300px); display: block;"></canvas>
+    </div>
+    <div style="flex: 1 1 auto; min-height: 0;"></div>
+  </div>
+
+  <div style="position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); display: flex; justify-content: center; align-items: flex-end; pointer-events: none;">
+    <span style="position: relative; display: inline-block; filter: drop-shadow(0 30px 60px rgba(20,10,25,0.5));">
+      <img src="assets/man.png" alt="Old man in crocheted candy-colored coat" style="height: min(58vh, 640px); max-width: 92vw; width: auto; display: block; object-fit: contain; object-position: bottom;">
+    </span>
+  </div>
+
+  <div style="position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: center; align-items: center; padding: 28px clamp(20px, 4vw, 56px);">
+    <nav style="display: flex; flex-wrap: nowrap; justify-content: center; align-items: center; gap: 4px; padding: 7px 10px; max-width: 100%; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); backdrop-filter: blur(14px);">
+      <a href="#home" onClick="{{ go }}" style="padding: 9px 16px; border-radius: 999px; font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em; color: rgba(250,246,248,0.92);" style-hover="background: rgba(255,255,255,0.12); color: #fff;">Home</a>
+      <a href="#make-a-curse" onClick="{{ go }}" style="padding: 9px 16px; border-radius: 999px; font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em; color: rgba(250,246,248,0.92);" style-hover="background: rgba(255,255,255,0.12); color: #fff;">Make a Curse</a>
+      <a href="#how-it-works" onClick="{{ go }}" style="padding: 9px 16px; border-radius: 999px; font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em; color: rgba(250,246,248,0.92);" style-hover="background: rgba(255,255,255,0.12); color: #fff;">How It Works</a>
+      <a href="#faqs" onClick="{{ go }}" style="padding: 9px 16px; border-radius: 999px; font-size: 13.5px; font-weight: 500; letter-spacing: 0.02em; color: rgba(250,246,248,0.92);" style-hover="background: rgba(255,255,255,0.12); color: #fff;">FAQs</a>
+    </nav>
+  </div>
+
+  <div style="position: absolute; left: clamp(20px, 4vw, 56px); bottom: clamp(30px, 6vh, 62px); display: flex; align-items: center; pointer-events: none;">
+    <span style="display: flex; align-items: center; gap: 9px;">
+      <span style="width: 19px; height: 21px; overflow: hidden; display: block;">
+        <img src="assets/url.svg" alt="" style="height: 21px; width: auto; display: block;">
+      </span>
+      <span style="font-size: 12.5px; font-weight: 500; letter-spacing: 0.1em; color: #F5F5F5; text-transform: uppercase;">theworstcurse.net</span>
+    </span>
+  </div>
+
+  <a href="#make-a-curse" onClick="{{ go }}" style="position: absolute; right: clamp(20px, 4vw, 56px); bottom: clamp(24px, 5vh, 56px); width: 82px; height: 82px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.07); backdrop-filter: blur(10px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;" style-hover="background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.5);">
+    <span style="font-size: 9.5px; font-weight: 500; letter-spacing: 0.18em; color: rgba(250,246,248,0.8); text-transform: uppercase; text-align: center; line-height: 1.4;">Scroll<br>down</span>
+    <span style="font-size: 15px; line-height: 1; color: rgba(250,246,248,0.85);">↓</span>
+  </a>
+</div>
+
+<section id="make-a-curse" data-screen-label="Make a Curse" style="position: relative; box-sizing: border-box; width: 100%; background: #17151D; font-family: 'DM Sans', Helvetica, sans-serif; overflow: hidden; padding: clamp(56px, 9vh, 104px) clamp(20px, 4vw, 56px) clamp(80px, 13vh, 150px); padding-top: clamp(120px, 9vh, 104px); padding-bottom: clamp(100px, 13vh, 100px)">
+  <div style="position: absolute; inset: 0; opacity: 0.4; background: linear-gradient(180deg, rgba(223,72,95,0.6) 0%, #9D3749 3%, #732C3B 14%, #17151D 34%, #17151D 100%); pointer-events: none;"></div>
+
+  <div style="position: relative; max-width: 532px; margin: 0 auto;">
+  <div style="{{ formWrap }}">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+      <h2 style="margin: 0; font-family: 'Kumar One', Georgia, serif; font-weight: 400; font-size: clamp(38px, 6.4vw, 62px); line-height: 1.1; color: #F5F5F5; text-wrap: pretty;">Make a Curse</h2>
+      <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(245,245,245,0.66);">Choose wisely. They probably deserve it.</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <h3 style="margin: 0; font-family: 'Kumar One', Georgia, serif; font-weight: 400; font-size: clamp(21px, 2.4vw, 26px); line-height: 1.3; color: #F5F5F5;">Victim Name</h3>
+      <input type="text" value="{{ target }}" onInput="{{ onTarget }}" placeholder="Enter a name or nickname..." style="width: 100%; box-sizing: border-box; padding: 15px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.035); color: #F5F5F5; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 15.5px; font-weight: 400; outline: none;" style-focus="border-color: rgba(223,72,95,0.8); background: rgba(255,255,255,0.06);">
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <h3 style="margin: 0; font-family: 'Kumar One', Georgia, serif; font-weight: 400; font-size: clamp(21px, 2.4vw, 26px); line-height: 1.3; color: #F5F5F5;">Choose Their Fate</h3>
+      <span style="position: relative; display: block;">
+        <select value="{{ fate }}" onChange="{{ onFate }}" style="width: 100%; box-sizing: border-box; padding: 15px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.035); color: #F5F5F5; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 15.5px; font-weight: 400; outline: none; appearance: none; -webkit-appearance: none; padding-right: 44px; cursor: pointer;" style-focus="border-color: rgba(223,72,95,0.8); background: rgba(255,255,255,0.06);">
+          <option value="" style="background: #221d26;">Select a curse...</option>
+          <sc-for list="{{ fates }}" as="f" hint-placeholder-count="5">
+            <option value="{{ f }}" style="background: #221d26;">{{ f }}</option>
+          </sc-for>
+        </select>
+        <span style="position: absolute; right: 18px; top: 50%; margin-top: -9px; font-size: 13px; line-height: 1; color: rgba(245,245,245,0.6); pointer-events: none;">▾</span>
+      </span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <h3 style="margin: 0; font-family: 'Kumar One', Georgia, serif; font-weight: 400; font-size: clamp(21px, 2.4vw, 26px); line-height: 1.3; color: #F5F5F5;">Not Evil Enough?</h3>
+      <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(245,245,245,0.66);">Create your own curse – <span style="font-weight: 700; color: #F5F5F5;">$4.99</span></p>
+      <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(245,245,245,0.66);">Got something more annoyingly specific in mind? Write your own completely fictional inconvenience.</p>
+      <textarea value="{{ custom }}" onInput="{{ onCustom }}" rows="3" placeholder="Enter your curse..." style="width: 100%; box-sizing: border-box; padding: 15px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.035); color: #F5F5F5; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 15.5px; font-weight: 400; outline: none; min-height: 96px; line-height: 1.55; resize: vertical;" style-focus="border-color: rgba(223,72,95,0.8); background: rgba(255,255,255,0.06);"></textarea>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 14px;">
+      <h3 style="margin: 0; font-family: 'Kumar One', Georgia, serif; font-weight: 400; font-size: clamp(21px, 2.4vw, 26px); line-height: 1.3; color: #F5F5F5;">Pay &amp; Cast</h3>
+      <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(245,245,245,0.66);">Secure checkout. No refunds for the damned.</p>
+
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <span style="font-size: 14px; font-weight: 400; color: rgba(245,245,245,0.72);">Card number</span>
+        <input type="text" inputmode="numeric" value="{{ card }}" onInput="{{ onCard }}" placeholder="1234 5678 9012 3456" style="width: 100%; box-sizing: border-box; padding: 15px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.035); color: #F5F5F5; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 15.5px; font-weight: 400; outline: none;" style-focus="border-color: rgba(223,72,95,0.8); background: rgba(255,255,255,0.06);" />
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 14px;">
+        <div style="display: flex; flex-direction: column; gap: 9px; min-width: 0;">
+          <span style="font-size: 14px; font-weight: 400; color: rgba(245,245,245,0.72);">Expiry date</span>
+          <input type="text" value="{{ expiry }}" onInput="{{ onExpiry }}" placeholder="MM/YY" style="width: 100%; box-sizing: border-box; padding: 15px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.035); color: #F5F5F5; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 15.5px; font-weight: 400; outline: none;" style-focus="border-color: rgba(223,72,95,0.8); background: rgba(255,255,255,0.06);" />
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 9px; min-width: 0;">
+          <span style="font-size: 14px; font-weight: 400; color: rgba(245,245,245,0.72);">CVV</span>
+          <input type="text" inputmode="numeric" value="{{ cvv }}" onInput="{{ onCvv }}" placeholder="123" style="width: 100%; box-sizing: border-box; padding: 15px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.035); color: #F5F5F5; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 15.5px; font-weight: 400; outline: none;" style-focus="border-color: rgba(223,72,95,0.8); background: rgba(255,255,255,0.06);" />
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <span style="font-size: 14px; font-weight: 400; color: rgba(245,245,245,0.72);">Cardholder name</span>
+        <input type="text" value="{{ holder }}" onInput="{{ onHolder }}" placeholder="Name on card" style="width: 100%; box-sizing: border-box; padding: 15px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.035); color: #F5F5F5; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 15.5px; font-weight: 400; outline: none;" style-focus="border-color: rgba(223,72,95,0.8); background: rgba(255,255,255,0.06);" />
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 8px; width: 534px; height: 47px">
+      <button type="button" onClick="{{ onCast }}" style="padding: 15px 30px; border-radius: 999px; border: none; background: #DF485F; color: #F5F5F5; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 15px; font-weight: 500; cursor: pointer;" style-hover="background: #C63A50;">{{ castLabel }}</button>
+      <span style="min-height: 19px; font-size: 13.5px; color: rgba(245,245,245,0.7); text-align: center;">{{ castNote }}</span>
+    </div>
+  </div>
+
+  <div style="{{ successWrap }}">
+    <h2 style="{{ sh1 }}">Curse successfully sent.</h2>
+    <p style="{{ sh2 }}">It&rsquo;s out of your hands now.</p>
+    <div style="{{ sBtnWrap }}">
+      <button type="button" onClick="{{ onReset }}" style="padding: 14px 28px; border-radius: 999px; border: none; background: #DF485F; color: #F5F5F5; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 16px; font-weight: 400; cursor: pointer; transition: background .3s ease;" style-hover="background: #C63A50;">Curse Someone Else</button>
+      <span style="font-size: clamp(14px, 1.7vw, 16px); color: rgba(245,245,245,0.62);">They deserve it.</span>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section id="how-it-works" data-screen-label="How It Works" style="position: relative; box-sizing: border-box; width: 100%; background: #17151D; font-family: 'DM Sans', Helvetica, sans-serif; overflow: hidden; padding: clamp(60px, 10vh, 112px) clamp(20px, 4vw, 56px) clamp(64px, 10vh, 116px); padding-top: clamp(100px, 10vh, 112px); padding-bottom: clamp(100px, 10vh, 116px)">
+  <div style="position: relative; max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(38px, 6vh, 66px);">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+      <h2 style="margin: 0; font-family: 'Kumar One', Georgia, serif; font-weight: 400; font-size: clamp(38px, 6.4vw, 62px); line-height: 1.1; color: #F5F5F5; text-wrap: pretty;">How It Works</h2>
+      <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(245,245,245,0.66);">No complicated rituals. No full moon required. Just three simple steps.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); gap: clamp(20px, 2.6vw, 34px);">
+      <article style="display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: 414px; padding: 34px 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); background: linear-gradient(168deg, rgba(23,21,29,0.9) 0%, rgba(80,36,48,0.42) 52%, rgba(141,51,71,0.3) 100%); box-shadow: 0 22px 50px rgba(12,8,14,0.45);">
+        <span style="font-size: 13px; font-weight: 400; letter-spacing: 0.04em; color: rgba(245,245,245,0.5); text-align: center;">(01)</span>
+        <h3 style="margin: 0; font-family: 'Kumar One', Georgia, serif; font-weight: 400; font-size: clamp(24px, 2.6vw, 31px); line-height: 1.28; color: #F5F5F5; text-align: center;">Name Your<br>Victim</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.62; color: rgba(245,245,245,0.7); text-align: center; text-wrap: pretty;">Enter the name of the person who deserves a little cosmic inconvenience.</p>
+      </article>
+      <article style="display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: 414px; padding: 34px 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); background: linear-gradient(168deg, rgba(23,21,29,0.9) 0%, rgba(80,36,48,0.42) 52%, rgba(141,51,71,0.3) 100%); box-shadow: 0 22px 50px rgba(12,8,14,0.45);">
+        <span style="font-size: 13px; font-weight: 400; letter-spacing: 0.04em; color: rgba(245,245,245,0.5); text-align: center;">(02)</span>
+        <h3 style="margin: 0; font-family: 'Kumar One', Georgia, serif; font-weight: 400; font-size: clamp(24px, 2.6vw, 31px); line-height: 1.28; color: #F5F5F5; text-align: center;">Choose<br>Their Fate</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.62; color: rgba(245,245,245,0.7); text-align: center; text-wrap: pretty;">Pick one of our carefully selected curses – or write your own if you’re feeling creative.</p>
+      </article>
+      <article style="display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: 414px; padding: 34px 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); background: linear-gradient(168deg, rgba(23,21,29,0.9) 0%, rgba(80,36,48,0.42) 52%, rgba(141,51,71,0.3) 100%); box-shadow: 0 22px 50px rgba(12,8,14,0.45);">
+        <span style="font-size: 13px; font-weight: 400; letter-spacing: 0.04em; color: rgba(245,245,245,0.5); text-align: center;">(03)</span>
+        <h3 style="margin: 0; font-family: 'Kumar One', Georgia, serif; font-weight: 400; font-size: clamp(24px, 2.6vw, 31px); line-height: 1.28; color: #F5F5F5; text-align: center;">Cast The<br>Curse</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.62; color: rgba(245,245,245,0.7); text-align: center; text-wrap: pretty;">Complete your order and leave the rest to the universe. Their slightly worse day is now out of your hands.</p>
+      </article>
+    </div>
+
+    <p style="margin: 0; text-align: center; font-size: 14.5px; color: rgba(245,245,245,0.62);">✦ 100% true. 100% actual supernatural power. ✦</p>
+  </div>
+</section>
+<section id="faqs" data-screen-label="FAQs" style="position: relative; box-sizing: border-box; width: 100%; background: #17151D; font-family: 'DM Sans', Helvetica, sans-serif; overflow: hidden; padding: clamp(60px, 10vh, 112px) clamp(20px, 4vw, 56px) clamp(72px, 12vh, 140px); padding-top: clamp(100px, 10vh, 112px); padding-bottom: clamp(120px, 12vh, 140px)">
+  <div style="position: absolute; left: 50%; bottom: -30%; width: min(140vw, 1600px); height: 60%; transform: translateX(-50%); background: radial-gradient(ellipse at 50% 100%, rgba(141,51,71,0.4) 0%, rgba(92,40,54,0.18) 46%, rgba(23,21,29,0) 74%); pointer-events: none;"></div>
+
+  <div style="position: relative; max-width: 728px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(38px, 6vh, 74px);">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center;">
+      <h2 style="margin: 0; font-family: 'Kumar One', Georgia, serif; font-weight: 400; font-size: clamp(38px, 6.4vw, 62px); line-height: 1.1; color: #F5F5F5;">FAQs</h2>
+      <p style="margin: 0; font-size: 16px; line-height: 1.6; color: rgba(245,245,245,0.66);">Questions before you ruin someone’s day? Fair enough.</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 28px;">
+      <sc-for list="{{ faqs }}" as="item" hint-placeholder-count="4">
+        <div style="border-radius: 16px; border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.022); overflow: hidden;">
+          <button type="button" onClick="{{ item.toggle }}" style="width: 100%; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 22px 24px; border: none; background: transparent; color: #F5F5F5; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 17px; font-weight: 400; letter-spacing: -0.005em; text-align: left; cursor: pointer;" style-hover="background: rgba(255,255,255,0.04);">
+            <span>{{ item.q }}</span>
+            <span style="flex: 0 0 auto; width: 10px; height: 10px; display: block; position: relative;">
+              <span style="{{ item.chevron }}"></span>
+            </span>
+          </button>
+          <div style="{{ item.body }}">
+            <div style="min-height: 0; overflow: hidden;">
+              <p style="margin: 0; padding: 0 24px 22px; font-size: 15px; line-height: 1.66; color: rgba(245,245,245,0.62); text-wrap: pretty;">{{ item.a }}</p>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+<footer data-screen-label="Footer" style="position: relative; box-sizing: border-box; width: 100%; height: min(52vh, 500px); min-height: 340px; overflow: hidden; background: #17151D; font-family: 'DM Sans', Helvetica, sans-serif; isolation: isolate;">
+
+  <canvas ref="{{ footBlobRef }}" style="position: absolute; inset: -4%; width: 108%; height: 108%; filter: blur(7px); opacity: 0.2; pointer-events: none;"></canvas>
+
+  <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(141,51,71,0.92) 0%, rgba(92,40,54,0.72) 16%, rgba(23,21,29,0.5) 34%, rgba(23,21,29,0.3) 100%); pointer-events: none;"></div>
+
+  <div style="position: absolute; left: 0; right: 0; top: 44px; display: flex; justify-content: center; pointer-events: none;">
+    <canvas ref="{{ footTextRef }}" style="width: 100%; max-width: 1320px; height: clamp(130px, 42vh, 230px); display: block;"></canvas>
+  </div>
+
+  <div style="position: absolute; left: 50%; bottom: 0; height: 100%; transform: translateX(-50%); display: flex; justify-content: center; align-items: flex-end; pointer-events: none;">
+    <img src="assets/man-footer.png" alt="Old man in a crocheted rainbow hood" style="height: 66%; max-width: 92vw; width: auto; display: block; object-fit: contain; object-position: bottom;">
+  </div>
+
+  <div style="position: absolute; left: clamp(20px, 4vw, 56px); bottom: clamp(26px, 5vh, 52px); display: flex; align-items: center; pointer-events: none;">
+    <span style="display: flex; align-items: center; gap: 9px;">
+      <span style="width: 19px; height: 21px; overflow: hidden; display: block;">
+        <img src="assets/url.svg" alt="" style="height: 21px; width: auto; display: block;">
+      </span>
+      <span style="font-size: 12.5px; font-weight: 500; letter-spacing: 0.1em; color: #F5F5F5; text-transform: uppercase;">theworstcurse.net</span>
+    </span>
+  </div>
+
+  <a href="#make-a-curse" onClick="{{ go }}" style="position: absolute; right: clamp(20px, 4vw, 56px); bottom: clamp(26px, 5vh, 52px); width: 82px; height: 82px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.07); backdrop-filter: blur(10px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;" style-hover="background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.5);">
+    <span style="font-size: 15px; line-height: 1; color: rgba(250,246,248,0.85);">↑</span>
+    <span style="font-size: 9.5px; font-weight: 500; letter-spacing: 0.18em; color: rgba(250,246,248,0.8); text-transform: uppercase; text-align: center; line-height: 1.4;">Scroll<br>up</span>
+  </a>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;headline&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Wanna Make|a Curse?&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Header&quot;},&quot;blobSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:30,&quot;min&quot;:5,&quot;max&quot;:100,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Background&quot;},&quot;mouseRadius&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:104,&quot;min&quot;:40,&quot;max&quot;:260,&quot;step&quot;:2,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Header&quot;}}">
+class Component extends DCLogic {
+  state = { target: "", fate: "", custom: "", card: "", expiry: "", cvv: "", card: "", expiry: "", cvv: "", holder: "", cast: false, sealed: false, faq: 0 };
+
+  constructor(props) {
+    super(props);
+    this.blobRef = React.createRef();
+    this.textRef = React.createRef();
+    this.footBlobRef = React.createRef();
+    this.footTextRef = React.createRef();
+    this.mouse = { x: -9999, y: -9999 };
+  }
+
+  succeed() {
+    this.setState({ cast: true, sealed: false }, () => {
+      clearTimeout(this._sealT);
+      this._sealT = setTimeout(() => this.setState({ sealed: true }), 30);
+    });
+  }
+
+  renderVals() {
+    const s = this.state || {};
+    const field = (key) => (ev) => this.setState({ [key]: ev.target.value, cast: false });
+    return {
+      blobRef: this.blobRef,
+      textRef: this.textRef,
+      footBlobRef: this.footBlobRef,
+      footTextRef: this.footTextRef,
+      target: s.target ?? "",
+      fate: s.fate ?? "",
+      custom: s.custom ?? "",
+      card: s.card ?? "",
+      expiry: s.expiry ?? "",
+      cvv: s.cvv ?? "",
+      holder: s.holder ?? "",
+      fates: [
+        "The line next to yours is always faster. \u2013 $4.49",
+        "You can never find the second earbud. \u2013 $4.99",
+        "Your Wi-Fi slows down when you need it most. \u2013 $4.99",
+        "Your phone is always at 9%. \u2013 $4.49",
+        "Every USB takes three tries. \u2013 $3.99",
+        "Your charger only works at one angle. \u2013 $4.49",
+        "One sock always disappears in the laundry. \u2013 $3.99",
+        "Your fitted sheet always pops off one corner. \u2013 $4.49",
+        "Your sleeves get wet when you wash your hands. \u2013 $3.99",
+        "Your headphones always catch on door handles. \u2013 $4.49",
+        "Your toast always lands topping-side down. \u2013 $3.99",
+        "Your shopping cart always has one bad wheel. \u2013 $4.49",
+        "Your password is always “incorrect” on the first try. \u2013 $4.99",
+        "Your delivery arrives five minutes after you leave. \u2013 $4.99",
+        "Your socks are always slightly damp. \u2013 $4.49",
+        "Your pillow is always warm on both sides. \u2013 $4.99",
+        "You always pick the slowest checkout. \u2013 $4.49",
+        "Your shoelaces randomly come undone. \u2013 $3.99",
+        "Your phone falls between the bed and the wall. \u2013 $4.49",
+        "You always forget why you entered the room. \u2013 $4.99",
+        "Your autocorrect changes the right word. \u2013 $4.49",
+        "Your screen brightness is always slightly wrong. \u2013 $3.99",
+        "Your cereal gets soggy immediately. \u2013 $3.99",
+        "Your ice cream always melts too fast. \u2013 $4.49",
+        "Your favorite song always gets interrupted. \u2013 $4.99",
+        "You always step on one mysterious wet spot. \u2013 $4.49",
+        "Your blanket never covers both feet and shoulders. \u2013 $4.99",
+        "Your pen stops working when someone asks to borrow it. \u2013 $3.99",
+        "Your popcorn always has too many unpopped kernels. \u2013 $3.99",
+        "Your alarm goes off right before the best part of your dream. \u2013 $4.99"
+      ],
+      faqs: [
+        ["Do the curses actually work?", "Absolutely. Results may vary depending on karma, Wi-Fi connection, and the current mood of the universe."],
+        ["How long does a curse take to work?", "Could be five minutes. Could be five years. The universe has terrible customer service."],
+        ["Can I curse the same person twice?", "Technically yes. Spiritually? That\u2019s between you and the universe."],
+        ["Can I cancel a curse?", "Once it\u2019s out there, it\u2019s out there. The universe doesn\u2019t have an Undo button."]
+      ].map(([q, a], i) => {
+        const open = (this.state.faq ?? 0) === i;
+        return {
+          q, a,
+          open,
+          toggle: () => this.setState({ faq: open ? -1 : i }),
+          chevron: "position: absolute; left: 50%; top: 50%; margin: -3.5px 0 0 -3.5px; width: 7px; height: 7px; border-right: 1.3px solid rgba(245,245,245," + (open ? "0.9" : "0.55") + "); border-bottom: 1.3px solid rgba(245,245,245," + (open ? "0.9" : "0.55") + "); transition: transform .5s cubic-bezier(.4,0,.2,1), border-color .4s ease; transform: translateY(" + (open ? "1.5px" : "-1.5px") + ") rotate(" + (open ? "225deg" : "45deg") + ");",
+          body: "display: grid; grid-template-rows: " + (open ? "1fr" : "0fr") + "; opacity: " + (open ? 1 : 0) + "; transition: grid-template-rows .5s cubic-bezier(.4,0,.2,1), opacity .4s ease;"
+        };
+      }),
+      onTarget: field("target"),
+      onFate: field("fate"),
+      onCustom: field("custom"),
+      onCard: field("card"),
+      onExpiry: field("expiry"),
+      onCvv: field("cvv"),
+      onHolder: field("holder"),
+      onCast: () => this.succeed(),
+      castLabel: s.cast ? "Sealing\u2026" : "Cast the Curse",
+      castNote: "",
+      onReset: () => this.setState({ target: "", fate: "", custom: "", card: "", expiry: "", cvv: "", holder: "", cast: false, sealed: false }),
+      formWrap: "display: flex; flex-direction: column; gap: 34px; transition: opacity .45s ease, transform .55s cubic-bezier(.4,0,.2,1), filter .45s ease;" +
+        (s.cast ? " opacity: 0; transform: scale(.97) translateY(-10px); filter: blur(3px); pointer-events: none; position: absolute; inset: 0;" : " opacity: 1; transform: none;"),
+      successWrap: "display: flex; flex-direction: column; align-items: center; text-align: center; gap: clamp(12px, 1.8vh, 18px); padding: clamp(40px, 9vh, 96px) 0;" +
+        (s.cast ? "" : " opacity: 0; pointer-events: none; position: absolute; inset: 0; visibility: hidden;"),
+      sh1: "margin: 0; font-family: 'Kumar One', Georgia, serif; font-weight: 400; font-size: clamp(34px, 6.2vw, 60px); line-height: 1.14; max-width: 12ch; color: #F5F5F5; text-wrap: pretty;" + (s.sealed ? " animation: rise-in .6s cubic-bezier(.4,0,.2,1) .2s both;" : " opacity: 0;"),
+      sh2: "margin: 0; font-size: clamp(15px, 1.8vw, 17px); line-height: 1.6; color: rgba(245,245,245,0.68);" + (s.sealed ? " animation: rise-in .6s cubic-bezier(.4,0,.2,1) .32s both;" : " opacity: 0;"),
+      sBtnWrap: "display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 18px;" + (s.sealed ? " animation: rise-in .6s cubic-bezier(.4,0,.2,1) .34s both;" : " opacity: 0;")
+    };
+  }
+
+  componentDidMount() {
+    this._onMove = (e) => {
+      const c = this.textRef.current;
+      if (c) {
+        const r = c.getBoundingClientRect();
+        this.mouse.x = e.clientX - r.left;
+        this.mouse.y = e.clientY - r.top;
+      }
+    };
+    window.addEventListener("mousemove", this._onMove);
+    this._blobs = this.makeBlobs();
+    this._t0 = performance.now();
+    this.startLoop();
+  }
+
+  componentDidUpdate() { this.startLoop(); }
+
+  componentWillUnmount() {
+    window.removeEventListener("mousemove", this._onMove);
+    cancelAnimationFrame(this._raf);
+  }
+
+  // measure + resize every tick: no observer, no latch that can strand the loop
+  syncSize() {
+    const bc = this.blobRef.current;
+    if (bc) {
+      const r = bc.getBoundingClientRect();
+      if (r.width > 4 && r.height > 4) {
+        const w = Math.round(r.width), h = Math.round(r.height);
+        if (bc.width !== w || bc.height !== h) { bc.width = w; bc.height = h; }
+      }
+    }
+    const fb = this.footBlobRef.current;
+    if (fb) {
+      const r = fb.getBoundingClientRect();
+      if (r.width > 4 && r.height > 4) {
+        const w = Math.round(r.width), h = Math.round(r.height);
+        if (fb.width !== w || fb.height !== h) { fb.width = w; fb.height = h; }
+      }
+    }
+    if (!this._m) this._m = document.createElement("canvas").getContext("2d");
+    this._m.font = "100px 'Kumar One', Georgia, serif";
+    const sig = Math.round(this._m.measureText("Wanna Make").width);
+    const fit = (ref, sigKey, offKey, text, lead, cap, frac) => {
+      const tc = ref.current;
+      if (!tc) return;
+      const r = tc.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = Math.round(r.width * dpr), h = Math.round(r.height * dpr);
+      if (w < 5 || h < 5) return;
+      if (tc.width !== w || tc.height !== h || sig !== this[sigKey]) {
+        tc.width = w; tc.height = h; this._dpr = dpr; this[sigKey] = sig;
+        this.sampleText(ref, offKey, text, lead, cap, frac);
+      }
+    };
+    fit(this.textRef, "_sig", "_off", this.props.headline ?? "Wanna Make|a Curse?", true, 130, 0.98);
+    fit(this.footTextRef, "_sigFoot", "_offFoot", this.props.footerHeadline ?? "You Know Who.", false, 420, 0.86);
+  }
+
+  startLoop() {
+    cancelAnimationFrame(this._raf);
+    const frame = (now) => {
+      const bc = this.blobRef.current;
+      if (!bc || !bc.isConnected) { this._raf = requestAnimationFrame(frame); return; }
+      try {
+        this.syncSize();
+        this.drawBlobs(now, this.blobRef);
+        this.drawBlobs(now, this.footBlobRef, 4000);
+        this.drawText(this.textRef, "_off");
+        this.drawText(this.footTextRef, "_offFoot");
+      } catch (err) {
+        if (!this._warned) { this._warned = true; console.warn("hero frame:", err); }
+      }
+      this._raf = requestAnimationFrame(frame);
+    };
+    this._raf = requestAnimationFrame(frame);
+  }
+
+  /* ---------- layer 2: moving blobs ---------- */
+  makeBlobs() {
+    const speed = (this.props.blobSpeed ?? 30) / 100;
+    if (!this._bg) {
+      const img = new Image();
+      img.onload = () => { this._bg = img; };
+      img.src = "assets/bg.png";
+    }
+    return new Array(7).fill(0).map((c, i) => ({
+      a: Math.random() * Math.PI * 2,
+      b: Math.random() * Math.PI * 2,
+      ra: 0.10 + Math.random() * 0.22,
+      rb: 0.08 + Math.random() * 0.2,
+      sa: (0.12 + Math.random() * 0.2) * speed,
+      sb: (0.1 + Math.random() * 0.24) * speed,
+      cx: 0.12 + (i / 7) * 0.76,
+      cy: 0.3 + Math.random() * 0.45,
+      r: 0.2 + Math.random() * 0.2
+    }));
+  }
+
+  // refraction: the background photo re-sampled through a field of drifting blobs
+  drawBlobs(now, ref, phase) {
+    const canvas = ref.current;
+    const bg = this._bg;
+    if (!canvas || !bg) return;
+    const ctx = canvas.getContext("2d");
+    const blobs = this._blobs || [];
+    const t = (now - this._t0) / 1000 + (phase || 0);
+    const W = canvas.width, H = canvas.height;
+    if (W < 4 || H < 4) return;
+    const seen = this._lastBlob || (this._lastBlob = new Map());
+    const prev = seen.get(canvas);
+    if (prev && now - prev < 55) return; // ~18fps is plenty for slow blobs
+    seen.set(canvas, now);
+
+    // cover-fit source rect
+    const sc = Math.max(W / bg.width, H / bg.height);
+    const sw = W / sc, sh = H / sc;
+    const sx0 = (bg.width - sw) / 2, sy0 = (bg.height - sh) / 2;
+
+    const pts = blobs.map((bl) => ({
+      x: (bl.cx + Math.cos(bl.a + t * bl.sa) * bl.ra) * W,
+      y: (bl.cy + Math.sin(bl.b + t * bl.sb) * bl.rb) * H,
+      r: bl.r * Math.min(W, H) * (1 + 0.14 * Math.sin(t * bl.sa * 1.7 + bl.a))
+    }));
+
+    const tile = 10;
+    const strength = 24;
+    ctx.clearRect(0, 0, W, H);
+
+    for (let y = 0; y < H; y += tile) {
+      for (let x = 0; x < W; x += tile) {
+        const cx = x + tile / 2, cy = y + tile / 2;
+        let gx = 0, gy = 0;
+        for (let i = 0; i < pts.length; i++) {
+          const p = pts[i];
+          const dx = cx - p.x, dy = cy - p.y;
+          const d2 = dx * dx + dy * dy + 1;
+          const w = (p.r * p.r) / d2;
+          if (w < 0.02) continue;
+          const k = w / Math.sqrt(d2);
+          gx += dx * k;
+          gy += dy * k;
+        }
+        const ox = Math.max(-tile * 3, Math.min(tile * 3, gx * strength));
+        const oy = Math.max(-tile * 3, Math.min(tile * 3, gy * strength));
+        const tw = tile / sc, th = tile / sc;
+        const sx = Math.max(0, Math.min(bg.width - tw, sx0 + (x + ox) / sc));
+        const sy = Math.max(0, Math.min(bg.height - th, sy0 + (y + oy) / sc));
+        ctx.drawImage(bg, sx, sy, tw, th, x, y, tile + 1, tile + 1);
+      }
+    }
+  }
+
+  /* ---------- layer 5: solid headline + dome refraction under the cursor ---------- */
+  drawText(ref, key) {
+    const canvas = ref.current;
+    const off = this[key];
+    if (!canvas || !off) return;
+    const ctx = canvas.getContext("2d");
+    const dpr = this._dpr || 1;
+    const radius = (this.props.mouseRadius ?? 104) * dpr;
+    const strength = 0.29;
+    // only repaint when the cursor actually moved
+    const seen = this._drawnAt || (this._drawnAt = {});
+    const last = seen[key];
+    if (last && last.x === this.mouse.x && last.y === this.mouse.y && last.w === canvas.width) return;
+    seen[key] = { x: this.mouse.x, y: this.mouse.y, w: canvas.width };
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(off, 0, 0);
+
+    const mx = this.mouse.x * dpr, my = this.mouse.y * dpr;
+    if (mx < -1000 || mx > canvas.width + radius || my > canvas.height + radius || my < -radius) return;
+
+    // clear the lens area, then re-draw it as displaced tiles (refraction)
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(mx, my, radius, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.clearRect(mx - radius, my - radius, radius * 2, radius * 2);
+    const tile = Math.max(4, Math.round(6 * dpr));
+    for (let y = my - radius; y < my + radius; y += tile) {
+      for (let x = mx - radius; x < mx + radius; x += tile) {
+        const dx = x + tile / 2 - mx, dy = y + tile / 2 - my;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > radius) continue;
+        const f = Math.cos((dist / radius) * Math.PI * 0.5);
+        const push = f * radius * strength;
+        const ang = Math.atan2(dy, dx);
+        const sx = Math.round(x - Math.cos(ang) * push);
+        const sy = Math.round(y - Math.sin(ang) * push);
+        const s = tile + 1 + f * 2;
+        ctx.drawImage(off, sx, sy, tile, tile, x, y, s, s);
+      }
+    }
+    ctx.restore();
+  }
+
+  sampleText(ref, offKey, headline, indentSecond, cap, frac) {
+    const canvas = (ref || this.textRef).current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 4 || rect.height < 4) return;
+    const dpr = this._dpr || Math.min(window.devicePixelRatio || 1, 2);
+    this._dpr = dpr;
+    const w = Math.round(rect.width * dpr), h = Math.round(rect.height * dpr);
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+
+    const off = document.createElement("canvas");
+    off.width = canvas.width;
+    off.height = canvas.height;
+    const o = off.getContext("2d");
+    const narrow = rect.width < 620;
+    let src = headline || "";
+    if (narrow) {
+      if (src === "Wanna Make|a Curse?") src = "Wanna|Make|a Curse?";
+      if (src === "You Know Who.") src = "You Know|Who.";
+    }
+    const lines = src.split("|");
+    if (narrow) { cap = Math.min(cap || 130, src.indexOf("|") < 0 ? 96 : 66); indentSecond = false; }
+    // requested size drives the type; it only shrinks by a real fit ratio
+    const target = cap || 130;
+    o.font = target + "px 'Kumar One', Georgia, serif";
+    let needW = 0;
+    lines.forEach((ln) => { needW = Math.max(needW, o.measureText(ln).width); });
+    if (indentSecond) needW *= 1.08; // second line is offset right
+    const needH = lines.length * target * 1.14;
+    const fit = Math.min(1, (rect.width * (frac || 0.98)) / needW, rect.height / needH);
+    const size = target * fit;
+    o.fillStyle = "#F5F5F5";
+    o.shadowColor = "rgba(120,60,80,0.28)";
+    o.shadowBlur = 18 * dpr;
+    o.shadowOffsetY = 4 * dpr;
+    o.textBaseline = "middle";
+    o.font = (size * dpr) + "px 'Kumar One', Georgia, serif";
+    const lh = size * 1.14 * dpr;
+    const startY = canvas.height / 2 - ((lines.length - 1) * lh) / 2;
+    lines.forEach((ln, i) => {
+      const w = o.measureText(ln).width;
+      // second line pushed right, as in the source layout
+      const shift = indentSecond && i > 0 ? canvas.width * 0.07 : 0;
+      const x = (canvas.width - w) / 2 + shift;
+      o.fillText(ln, Math.max(0, x), startY + i * lh);
+    });
+
+    this[offKey || "_off"] = off;
+  }
+}
+
+</script>
+</body>
+</html>
+
+{
+  "name": "theworstcurse",
+  "version": "1.0.0",
+  "private": true,
+  "description": "theworstcurse.net — curse storefront with Stripe payments",
+  "dependencies": {
+    "stripe": "^16.12.0"
+  }
+}
+
+// GENERATED from dc-runtime/src/*.ts — do not edit. Rebuild with `cd dc-runtime && bun run build`.
+"use strict";
+(() => {
+  var __defProp = Object.defineProperty;
+  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+  var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+
+  // src/react.ts
+  function getReact() {
+    const R = window.React;
+    if (!R) throw new Error("dc-runtime: window.React is not available yet");
+    return R;
+  }
+  function getReactDOM() {
+    const RD = window.ReactDOM;
+    if (!RD) throw new Error("dc-runtime: window.ReactDOM is not available yet");
+    return RD;
+  }
+  var h = ((...args) => getReact().createElement(
+    ...args
+  ));
+
+  // src/parse.ts
+  function parseDcDocument(doc) {
+    const dc = doc.querySelector("x-dc");
+    if (!dc) return null;
+    const scriptEl = doc.querySelector("script[data-dc-script]");
+    const { props, preview } = parseDataProps(
+      scriptEl?.getAttribute("data-props") ?? null
+    );
+    return {
+      template: dc.innerHTML,
+      js: scriptEl ? scriptEl.textContent || "" : "",
+      props,
+      preview
+    };
+  }
+  function parseDcText(src) {
+    const openMatch = /<x-dc(?:\s[^>]*)?>/.exec(src);
+    if (!openMatch) return null;
+    const close = src.lastIndexOf("</x-dc>");
+    if (close === -1 || close < openMatch.index) return null;
+    const template = src.slice(openMatch.index + openMatch[0].length, close);
+    const doc = new DOMParser().parseFromString(src, "text/html");
+    const scriptEl = doc.querySelector("script[data-dc-script]");
+    const { props, preview } = parseDataProps(
+      scriptEl?.getAttribute("data-props") ?? null
+    );
+    return {
+      template,
+      js: scriptEl ? scriptEl.textContent || "" : "",
+      props,
+      preview
+    };
+  }
+  function parseDataProps(raw) {
+    if (!raw) return { props: null, preview: null };
+    let parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return { props: null, preview: null };
+    }
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return { props: null, preview: null };
+    }
+    const obj = parsed;
+    const preview = obj.$preview && typeof obj.$preview === "object" ? obj.$preview : null;
+    const rest = {};
+    for (const k of Object.keys(obj)) {
+      if (k[0] !== "$") rest[k] = obj[k];
+    }
+    return { props: Object.keys(rest).length ? rest : null, preview };
+  }
+  function dcNameFromPath(pathname) {
+    let p = pathname || "";
+    try {
+      p = decodeURIComponent(p);
+    } catch {
+    }
+    const base = p.split("/").pop() || "Root";
+    return base.replace(/\.dc\.html$/, "").replace(/\.html?$/, "") || "Root";
+  }
+
+  // src/boot.ts
+  var BASE_CSS = `
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts \u2014 keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  `;
+  var FULL_PAGE_CSS = "html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}";
+  function rootNameForDocument(doc, loc) {
+    let bootPath = loc.pathname || "";
+    if (!/\.dc\.html?$/i.test(safeDecode(bootPath))) {
+      try {
+        bootPath = new URL(doc.baseURI || "/").pathname;
+      } catch {
+      }
+    }
+    return dcNameFromPath(bootPath);
+  }
+  function safeDecode(s) {
+    try {
+      return decodeURIComponent(s);
+    } catch {
+      return s;
+    }
+  }
+  function boot(runtime, doc = document) {
+    const parsed = parseDcDocument(doc);
+    if (!parsed) return null;
+    const React = getReact();
+    const rootName = rootNameForDocument(doc, location);
+    runtime.markFetched(rootName);
+    runtime.setRootName(rootName);
+    runtime.adoptParsed(rootName, parsed);
+    if (!window.__resources) {
+      fetch(location.href).then((res) => res.ok ? res.text() : "").then((t) => {
+        const raw = t ? parseDcText(t) : null;
+        if (raw?.template) runtime.updateHtml(rootName, raw.template);
+      }).catch(() => {
+      });
+    }
+    const dc = doc.querySelector("x-dc");
+    const hostEl = doc.createElement("div");
+    hostEl.id = "dc-root";
+    dc.replaceWith(hostEl);
+    if (!parsed.preview) {
+      const s = doc.createElement("style");
+      s.textContent = FULL_PAGE_CSS;
+      doc.head.appendChild(s);
+    }
+    const Root = runtime.getDC(rootName);
+    const entry = runtime.registry.get(rootName);
+    function StandaloneRoot() {
+      const [, setTick] = React.useState(0);
+      React.useEffect(() => {
+        const sub = () => setTick((n) => n + 1);
+        entry.subs.add(sub);
+        return () => {
+          entry.subs.delete(sub);
+        };
+      }, []);
+      const defaults = React.useMemo(() => {
+        const d = {};
+        for (const k in entry.propsMeta || {}) {
+          const v = entry.propsMeta?.[k]?.default;
+          if (v !== void 0) d[k] = v;
+        }
+        return d;
+      }, [entry.propsMeta]);
+      return h(Root, { ...defaults, ...entry.propOverrides || {} });
+    }
+    const ReactDOM = getReactDOM();
+    if (ReactDOM.createRoot)
+      ReactDOM.createRoot(hostEl).render(h(StandaloneRoot));
+    else ReactDOM.render(h(StandaloneRoot), hostEl);
+    return rootName;
+  }
+
+  // src/expr.ts
+  var IDENT_RE = /^[A-Za-z_$][A-Za-z0-9_$]*/;
+  var NUMBER_RE = /^-?\d+(\.\d+)?$/;
+  function resolve(vals, src) {
+    const expr = String(src).trim();
+    if (!expr) return void 0;
+    if (expr[0] === "(" && expr[expr.length - 1] === ")" && parensWrapWhole(expr)) {
+      return resolve(vals, expr.slice(1, -1));
+    }
+    const eq = findTopLevelEquality(expr);
+    if (eq) {
+      const lv = resolve(vals, expr.slice(0, eq.index));
+      const rv = resolve(vals, expr.slice(eq.index + eq.op.length));
+      switch (eq.op) {
+        case "===":
+          return lv === rv;
+        case "!==":
+          return lv !== rv;
+        case "==":
+          return lv == rv;
+        default:
+          return lv != rv;
+      }
+    }
+    if (expr[0] === "!") return !resolve(vals, expr.slice(1));
+    if (expr === "true") return true;
+    if (expr === "false") return false;
+    if (expr === "null") return null;
+    if (expr === "undefined") return void 0;
+    if (NUMBER_RE.test(expr)) return Number(expr);
+    if (expr.length >= 2 && (expr[0] === '"' || expr[0] === "'") && expr[expr.length - 1] === expr[0]) {
+      return expr.slice(1, -1);
+    }
+    return resolvePath(vals, expr);
+  }
+  function parensWrapWhole(expr) {
+    let depth = 0;
+    for (let i = 0; i < expr.length - 1; i++) {
+      if (expr[i] === "(") depth++;
+      else if (expr[i] === ")") {
+        depth--;
+        if (depth === 0) return false;
+      }
+    }
+    return true;
+  }
+  function findTopLevelEquality(expr) {
+    let depth = 0;
+    for (let i = 0; i < expr.length; i++) {
+      const c = expr[i];
+      if (c === "[" || c === "(") depth++;
+      else if (c === "]" || c === ")") depth--;
+      else if (depth === 0 && (c === "=" || c === "!") && expr[i + 1] === "=") {
+        if (i > 0 && (expr[i - 1] === "=" || expr[i - 1] === "!")) continue;
+        if (!expr.slice(0, i).trim()) continue;
+        const op = expr[i + 2] === "=" ? c + "==" : c + "=";
+        return { index: i, op };
+      }
+    }
+    return null;
+  }
+  function resolvePath(vals, expr) {
+    const head = expr.match(IDENT_RE);
+    if (!head) return void 0;
+    let cur = vals == null ? void 0 : vals[head[0]];
+    let i = head[0].length;
+    while (i < expr.length) {
+      if (expr[i] === ".") {
+        const m = expr.slice(i + 1).match(IDENT_RE) || expr.slice(i + 1).match(/^\d+/);
+        if (!m) return void 0;
+        cur = cur == null ? void 0 : cur[m[0]];
+        i += 1 + m[0].length;
+      } else if (expr[i] === "[") {
+        let depth = 1;
+        let j = i + 1;
+        while (j < expr.length && depth > 0) {
+          if (expr[j] === "[") depth++;
+          else if (expr[j] === "]") {
+            depth--;
+            if (depth === 0) break;
+          }
+          j++;
+        }
+        if (depth !== 0) return void 0;
+        const key = resolve(vals, expr.slice(i + 1, j));
+        cur = cur == null ? void 0 : cur[key];
+        i = j + 1;
+      } else {
+        return void 0;
+      }
+    }
+    return cur;
+  }
+
+  // src/encode.ts
+  var CAMEL_ATTR = "sc-camel-";
+  var INLINE_TEXT_TAGS = new Set(
+    "a abbr b bdi bdo br cite code del dfn em i ins kbd mark q s samp small span strike strong sub sup u var wbr".split(
+      " "
+    )
+  );
+  var RAW_WRAP = {
+    select: "sc-raw-select",
+    table: "sc-raw-table",
+    tbody: "sc-raw-tbody",
+    thead: "sc-raw-thead",
+    tfoot: "sc-raw-tfoot",
+    tr: "sc-raw-tr",
+    td: "sc-raw-td",
+    th: "sc-raw-th",
+    caption: "sc-raw-caption"
+  };
+  var RAW_UNWRAP = Object.fromEntries(
+    Object.entries(RAW_WRAP).map(([k, v]) => [v, k])
+  );
+  var EVENT_MAP = {
+    onclick: "onClick",
+    onchange: "onChange",
+    oninput: "onInput",
+    onsubmit: "onSubmit",
+    onkeydown: "onKeyDown",
+    onkeyup: "onKeyUp",
+    onkeypress: "onKeyPress",
+    onmousedown: "onMouseDown",
+    onmouseup: "onMouseUp",
+    onmouseenter: "onMouseEnter",
+    onmouseleave: "onMouseLeave",
+    onfocus: "onFocus",
+    onblur: "onBlur",
+    ondoubleclick: "onDoubleClick",
+    oncontextmenu: "onContextMenu",
+    onmousemove: "onMouseMove",
+    onmouseover: "onMouseOver",
+    onmouseout: "onMouseOut",
+    onpointerdown: "onPointerDown",
+    onpointerup: "onPointerUp",
+    onpointermove: "onPointerMove",
+    onpointerenter: "onPointerEnter",
+    onpointerleave: "onPointerLeave",
+    onpointercancel: "onPointerCancel",
+    onpointerover: "onPointerOver",
+    onpointerout: "onPointerOut",
+    ongotpointercapture: "onGotPointerCapture",
+    onlostpointercapture: "onLostPointerCapture",
+    ontouchstart: "onTouchStart",
+    ontouchend: "onTouchEnd",
+    ontouchmove: "onTouchMove",
+    ontouchcancel: "onTouchCancel",
+    ondragstart: "onDragStart",
+    ondragend: "onDragEnd",
+    ondragenter: "onDragEnter",
+    ondragleave: "onDragLeave",
+    ondragover: "onDragOver",
+    onanimationstart: "onAnimationStart",
+    onanimationend: "onAnimationEnd",
+    onanimationiteration: "onAnimationIteration",
+    ontransitionend: "onTransitionEnd"
+  };
+  var ATTRS = `(?:[^>"']|"[^"]*"|'[^']*')*`;
+  var IMPORT_SELF_CLOSE_RE = new RegExp(
+    "<(x-import|dc-import)(" + ATTRS + ")/>",
+    "gi"
+  );
+  var CAMEL_ATTR_RE = /(\s)([a-z]+[A-Z][A-Za-z0-9]*)(\s*=)/g;
+  function encodeCamelAttrs(html) {
+    return html.replace(
+      CAMEL_ATTR_RE,
+      (_, sp, name, eq) => sp + CAMEL_ATTR + name.replace(/[A-Z]/g, (c) => "-" + c.toLowerCase()) + eq
+    );
+  }
+  function encodeCase(html) {
+    html = html.replace(
+      IMPORT_SELF_CLOSE_RE,
+      (_, t, a) => "<" + t + a + "></" + t + ">"
+    );
+    html = html.replace(/<helmet(\s|>)/gi, "<sc-helmet$1");
+    html = html.replace(/<\/helmet\s*>/gi, "</sc-helmet>");
+    html = encodeCamelAttrs(html);
+    for (const [real, alias] of Object.entries(RAW_WRAP)) {
+      html = html.replace(
+        new RegExp("(</?)" + real + "(?=[\\s>])", "gi"),
+        "$1" + alias
+      );
+    }
+    return html;
+  }
+  function kebabToCamel(s) {
+    return s.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+  }
+  function cssToObj(css) {
+    const o = {};
+    for (const decl of css.split(";")) {
+      const i = decl.indexOf(":");
+      if (i < 0) continue;
+      const prop = decl.slice(0, i).trim();
+      o[prop.startsWith("--") ? prop : kebabToCamel(prop)] = decl.slice(i + 1).trim();
+    }
+    return o;
+  }
+  function compileAttr(raw) {
+    const whole = raw.match(/^\s*\{\{([\s\S]+?)\}\}\s*$/);
+    if (whole) {
+      const path = whole[1];
+      return (vals) => resolve(vals, path);
+    }
+    if (raw.includes("{{")) {
+      const parts = raw.split(/\{\{([\s\S]+?)\}\}/g);
+      return (vals) => parts.map((s, i) => i & 1 ? resolve(vals, s) ?? "" : s).join("");
+    }
+    return () => raw;
+  }
+
+  // src/compile.ts
+  function collectProps(node, kind, host) {
+    const propGetters = [];
+    const pseudoClasses = [];
+    let hintSize = null;
+    for (const { name, value } of [...node.attributes]) {
+      if (name === "sc-name" || name === "data-dc-tpl") continue;
+      let key = name;
+      if (key.startsWith(CAMEL_ATTR))
+        key = kebabToCamel(key.slice(CAMEL_ATTR.length));
+      if (key === "hint-size") {
+        hintSize = value;
+        continue;
+      }
+      if (key.startsWith("style-")) {
+        pseudoClasses.push(host.pseudoClass(key.slice(6), value));
+        continue;
+      }
+      if (kind !== "dom") {
+        if (key.includes("-") && !(kind === "x-import" && (key.startsWith("aria-") || key.startsWith("data-"))))
+          key = kebabToCamel(key);
+      } else {
+        if (key === "class") key = "className";
+        else if (key === "for") key = "htmlFor";
+        else if (key.startsWith("on"))
+          key = EVENT_MAP[key] || "on" + key[2].toUpperCase() + key.slice(3);
+      }
+      propGetters.push([key, compileAttr(value)]);
+    }
+    return { propGetters, pseudoClasses, hintSize };
+  }
+  var HOST_STYLE_PROPS = /* @__PURE__ */ new Set([
+    "position",
+    "left",
+    "right",
+    "top",
+    "bottom",
+    "inset",
+    "width",
+    "height",
+    "z-index",
+    "transform"
+  ]);
+  function hostPositionStyle(style) {
+    const all = typeof style === "string" ? cssToObj(style) : style != null && typeof style === "object" ? style : null;
+    if (!all) return void 0;
+    const out = {};
+    for (const [k, v] of Object.entries(all)) {
+      const kebab = k.replace(/[A-Z]/g, (c) => "-" + c.toLowerCase());
+      if (HOST_STYLE_PROPS.has(kebab)) out[k] = v;
+    }
+    return Object.keys(out).length ? out : void 0;
+  }
+  function compileTemplate(html, host) {
+    const tpl = document.createElement("template");
+    //! nosemgrep: direct-inner-html-assignment
+    tpl.innerHTML = encodeCase(html);
+    let tplN = 0;
+    (function stamp(node) {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        node.setAttribute("data-dc-tpl", String(tplN++));
+      }
+      for (const c of node.childNodes) stamp(c);
+    })(tpl.content);
+    const builders = walkChildren(tpl.content, host);
+    const render = ((vals, ctx) => builders.map((b, i) => b(vals || {}, ctx, i)));
+    render.__annotated = tpl.innerHTML;
+    return render;
+  }
+  function walkChildren(node, host) {
+    return [...node.childNodes].map((c) => walk(c, host)).filter((b) => b != null);
+  }
+  var SLIDE_ID_VALUE_RE = /^[0-9a-f]{8}$/;
+  var DECK_CONTROL_FLOW_RE = /^(sc-if|sc-for|sc-else|dc-import|x-import)$/;
+  var DECK_AUX_RE = /^(template|script|style|sc-helmet|helmet)$/;
+  function isDeckMountTag(el) {
+    if (el.localName === "deck-stage") return true;
+    return el.localName === "x-import" && (el.getAttribute("component-from-global-scope") || "") === "deck-stage";
+  }
+  function walkDeckChildren(el, host) {
+    const pairs = [...el.childNodes].map((c) => ({ c, b: walk(c, host) })).filter((p) => p.b !== null);
+    const kids = pairs.map((p) => p.b);
+    const seen = /* @__PURE__ */ new Set();
+    const wsSeen = /* @__PURE__ */ new Map();
+    const keys = [];
+    const nextSlideId = new Array(pairs.length);
+    {
+      let upcoming = null;
+      for (let j = pairs.length - 1; j >= 0; j--) {
+        const n = pairs[j].c;
+        if (n.nodeType === Node.ELEMENT_NODE) {
+          const t = n.localName;
+          upcoming = !DECK_AUX_RE.test(t) && !DECK_CONTROL_FLOW_RE.test(t) ? n.getAttribute("data-om-slide-id") : null;
+        }
+        nextSlideId[j] = upcoming;
+      }
+    }
+    for (let j = 0; j < pairs.length; j++) {
+      const { c } = pairs[j];
+      if (c.nodeType === Node.TEXT_NODE) {
+        if ((c.nodeValue ?? "").trim() === "") {
+          const base = nextSlideId[j] ? "omid-ws:" + nextSlideId[j] : "omid-ws:aux";
+          const n = wsSeen.get(base) ?? 0;
+          wsSeen.set(base, n + 1);
+          keys.push(n === 0 ? base : base + ":" + n);
+          continue;
+        }
+        return { kids, keys: null };
+      }
+      if (c.nodeType !== Node.ELEMENT_NODE) {
+        keys.push(j);
+        continue;
+      }
+      const child = c;
+      const tag = child.localName;
+      if (DECK_AUX_RE.test(tag)) {
+        keys.push(j);
+        continue;
+      }
+      if (DECK_CONTROL_FLOW_RE.test(tag)) return { kids, keys: null };
+      const v = child.getAttribute("data-om-slide-id");
+      if (!v || !SLIDE_ID_VALUE_RE.test(v) || seen.has(v)) {
+        return { kids, keys: null };
+      }
+      seen.add(v);
+      keys.push("omid:" + v);
+    }
+    return { kids, keys };
+  }
+  function renderDeckKids(kids, kidKeys, vals, ctx) {
+    return kids.map((b, j) => {
+      const k = kidKeys ? kidKeys[j] : j;
+      const out = b(vals, ctx, k);
+      return kidKeys != null && typeof out === "string" ? h(getReact().Fragment, { key: k }, out) : out;
+    });
+  }
+  function walk(node, host) {
+    if (node.nodeType === Node.TEXT_NODE) return walkText(node);
+    if (node.nodeType !== Node.ELEMENT_NODE) return null;
+    const el = node;
+    const tag = el.tagName.toLowerCase();
+    if (tag === "sc-for") return walkFor(el, host);
+    if (tag === "sc-if") return walkIf(el, host);
+    if (tag === "x-import") return walkXImport(el, host);
+    if (tag === "sc-helmet") return host.helmet(el);
+    if (tag === "dc-import") return walkComponent(el, host);
+    return walkElement(el, host);
+  }
+  var warnedHoles = /* @__PURE__ */ new Set();
+  function warnUnresolved(ctx, what) {
+    const key = (ctx?.__name || "?") + "\0" + what;
+    if (warnedHoles.has(key)) return;
+    warnedHoles.add(key);
+    console.warn("[dc-runtime] " + (ctx?.__name || "template") + ": " + what);
+  }
+  function walkText(node) {
+    const txt = node.nodeValue ?? "";
+    if (!txt.includes("{{")) {
+      if (!txt.trim() && !txt.includes(" ")) return null;
+      return () => txt;
+    }
+    const parts = txt.split(/\{\{([\s\S]+?)\}\}/g);
+    return (vals, ctx, key) => h(
+      getReact().Fragment,
+      { key },
+      ...parts.map((p, i) => {
+        if (!(i & 1)) return p;
+        const v = resolve(vals, p);
+        if (v === void 0) {
+          if (!ctx?.__streamingNow) {
+            if (document.body?.hasAttribute("data-dc-editor-on")) {
+              return h(
+                "span",
+                { key: i, className: "sc-interp sc-unresolved" },
+                "{{ " + p.trim() + " }}"
+              );
+            }
+            warnUnresolved(
+              ctx,
+              "{{ " + p.trim() + " }} never resolved \u2014 rendered as empty"
+            );
+            return null;
+          }
+          return h(
+            "span",
+            { key: i, className: "sc-interp sc-missing" },
+            p.trim()
+          );
+        }
+        if (getReact().isValidElement(v) || Array.isArray(v)) {
+          return h(getReact().Fragment, { key: i }, v);
+        }
+        if (v === null || typeof v === "boolean") return null;
+        return h("span", { key: i, className: "sc-interp" }, String(v));
+      })
+    );
+  }
+  function walkFor(el, host) {
+    const listGet = compileAttr(el.getAttribute("list") || "");
+    const asName = el.getAttribute("as") || "item";
+    const hintN = parseInt(el.getAttribute("hint-placeholder-count") || "0", 10);
+    const kids = walkChildren(el, host);
+    const listSrc = el.getAttribute("list") || "";
+    return (vals, ctx, key) => {
+      let list = listGet(vals);
+      if (!Array.isArray(list)) {
+        if (!ctx?.__streamingNow) {
+          if (list !== void 0 && list !== null) {
+            warnUnresolved(
+              ctx,
+              'sc-for list="' + listSrc + '" is not an array (' + typeof list + ")"
+            );
+          }
+          list = [];
+        } else {
+          list = hintN > 0 ? Array(hintN).fill(void 0) : [];
+        }
+      }
+      return h(
+        getReact().Fragment,
+        { key },
+        list.map((item, i) => {
+          const sub = { ...vals, [asName]: item, $index: i };
+          return h(
+            getReact().Fragment,
+            { key: i },
+            kids.map((b, j) => b(sub, ctx, j))
+          );
+        })
+      );
+    };
+  }
+  function walkIf(el, host) {
+    const valGet = compileAttr(el.getAttribute("value") || "");
+    const hintRaw = el.getAttribute("hint-placeholder-val");
+    const hintGet = hintRaw != null ? compileAttr(hintRaw) : null;
+    const kids = walkChildren(el, host);
+    return (vals, ctx, key) => {
+      let v = valGet(vals);
+      if (v === void 0 && hintGet && ctx?.__streamingNow) v = hintGet(vals);
+      return v ? h(
+        getReact().Fragment,
+        { key },
+        kids.map((b, j) => b(vals, ctx, j))
+      ) : null;
+    };
+  }
+  function walkComponent(el, host) {
+    const name = el.getAttribute("name") || el.getAttribute("component") || "";
+    el.removeAttribute("name");
+    el.removeAttribute("component");
+    const tplId = el.getAttribute("data-dc-tpl");
+    const styleRaw = el.getAttribute("style");
+    el.removeAttribute("style");
+    const styleGet = styleRaw != null ? compileAttr(styleRaw) : null;
+    const { propGetters, hintSize } = collectProps(el, "dc-import", host);
+    const kids = walkChildren(el, host);
+    return (vals, ctx, key) => {
+      const props = {
+        key,
+        __hintSize: hintSize,
+        __tplId: tplId,
+        __hostStyle: styleGet ? hostPositionStyle(styleGet(vals)) : void 0
+      };
+      for (const [k, g] of propGetters) {
+        const v = g(vals);
+        if (k === "dcProps") {
+          if (v && typeof v === "object") Object.assign(props, v);
+          continue;
+        }
+        props[k] = v;
+      }
+      if (kids.length) props.children = kids.map((b, j) => b(vals, ctx, j));
+      return h(host.component(name), props);
+    };
+  }
+  function walkXImport(el, host) {
+    const globalNameGet = compileAttr(
+      el.getAttribute("component-from-global-scope") || ""
+    );
+    const exportNameGet = compileAttr(
+      el.getAttribute("component") || el.getAttribute("name") || ""
+    );
+    const fromRaw = el.getAttribute("from") || (el.getAttribute("component-from-global-scope") ? "" : el.getAttribute("src") || el.getAttribute("import") || "");
+    const urls = fromRaw.trim() ? fromRaw.trim().split(/\s+/) : [];
+    const url = urls.length ? urls[urls.length - 1] : "";
+    const kindOf = (u) => /\.(jsx|tsx)(\?|#|$)/i.test(u) ? "jsx" : "js";
+    const tplId = el.getAttribute("data-dc-tpl");
+    const styleRaw = el.getAttribute("style");
+    el.removeAttribute("style");
+    const styleGet = styleRaw != null ? compileAttr(styleRaw) : null;
+    const wrap = tplId != null || styleGet != null;
+    const { propGetters, hintSize } = collectProps(el, "x-import", host);
+    const hasContent = el.children.length > 0 || !!(el.textContent || "").trim();
+    const deckKeyed = hasContent && isDeckMountTag(el) ? walkDeckChildren(el, host) : null;
+    const kids = deckKeyed ? deckKeyed.kids : hasContent ? walkChildren(el, host) : [];
+    const kidKeys = deckKeyed?.keys ?? null;
+    const urlBindable = fromRaw.includes("{{");
+    if (urls.length && !urlBindable) {
+      let prev;
+      for (const u of urls) prev = host.loadExternal(kindOf(u), u, prev);
+    }
+    const evalName = (g, vals) => {
+      const v = g(vals);
+      const s = v == null ? "" : String(v);
+      return s.includes("{{") ? "" : s;
+    };
+    return (vals, ctx, key) => {
+      const globalName = evalName(globalNameGet, vals);
+      const name = globalName || evalName(exportNameGet, vals);
+      const C = !name || urlBindable ? null : globalName ? host.resolveExternalGlobal(url, globalName) : host.resolveExternal(url, name);
+      const hostStyle = styleGet ? hostPositionStyle(styleGet(vals)) : void 0;
+      const wrapper = wrap ? {
+        key,
+        className: "sc-host-x",
+        "data-dc-tpl": tplId,
+        style: hostStyle || { display: "contents" }
+      } : null;
+      if (!C) {
+        const error = urlBindable ? "x-import `from` cannot contain {{ \u2026 }} \u2014 module URLs are resolved at parse time; use a literal URL" : host.resolveExternalError(url, name);
+        const ph = host.placeholder({
+          key: wrapper ? void 0 : key,
+          name,
+          hintSize,
+          error
+        });
+        return wrapper ? h("div", wrapper, ph) : ph;
+      }
+      const props = wrapper ? {} : { key };
+      let unresolvedHole = false;
+      for (const [k, g] of propGetters) {
+        if (k === "component" || k === "componentFromGlobalScope" || k === "from") {
+          continue;
+        }
+        const v = g(vals);
+        if (v === void 0) unresolvedHole = true;
+        if (k === "dcProps") {
+          if (v && typeof v === "object") Object.assign(props, v);
+          continue;
+        }
+        props[k] = v;
+      }
+      if (unresolvedHole && ctx?.__htmlStreamingNow) {
+        const ph = host.placeholder({
+          key: wrapper ? void 0 : key,
+          name,
+          hintSize,
+          error: null
+        });
+        return wrapper ? h("div", wrapper, ph) : ph;
+      }
+      if (kids.length) {
+        props.children = renderDeckKids(kids, kidKeys, vals, ctx);
+      }
+      return wrapper ? h("div", wrapper, h(C, props)) : h(C, props);
+    };
+  }
+  function contentKey(el) {
+    const clone = el.cloneNode(true);
+    for (const d of clone.querySelectorAll("*")) {
+      while (d.attributes.length) d.removeAttribute(d.attributes[0].name);
+    }
+    const s = clone.innerHTML;
+    let h2 = 5381;
+    for (let i = 0; i < s.length; i++) h2 = (h2 << 5) + h2 + s.charCodeAt(i) | 0;
+    return s.length + "." + (h2 >>> 0).toString(36);
+  }
+  var NEVER_CONTENT_KEYED = new Set(
+    "script style textarea option title select canvas iframe video audio".split(
+      " "
+    )
+  );
+  var NOT_INLINE_SELECTOR = ":not(" + [...INLINE_TEXT_TAGS].join(",") + ")";
+  function walkElement(el, host) {
+    const realTag = RAW_UNWRAP[el.localName] || el.localName;
+    const tplId = el.getAttribute("data-dc-tpl");
+    const inlineOnly = el.childNodes.length > 0 && !NEVER_CONTENT_KEYED.has(realTag) && el.querySelector(NOT_INLINE_SELECTOR) === null;
+    const keySuffix = inlineOnly ? "|" + contentKey(el) : "";
+    const { propGetters, pseudoClasses } = collectProps(el, "dom", host);
+    const deckKeyed = isDeckMountTag(el) ? walkDeckChildren(el, host) : null;
+    const kids = deckKeyed ? deckKeyed.kids : walkChildren(el, host);
+    const kidKeys = deckKeyed?.keys ?? null;
+    return (vals, ctx, key) => {
+      const props = {
+        key: key + keySuffix,
+        "data-dc-tpl": tplId
+      };
+      for (const [k, g] of propGetters) {
+        let v = g(vals);
+        if (k === "style" && typeof v === "string") v = cssToObj(v);
+        if ((k === "value" || k === "checked") && v === void 0) {
+          v = k === "checked" ? false : "";
+        }
+        props[k] = v;
+      }
+      if (pseudoClasses.length) {
+        props.className = [props.className, ...pseudoClasses].filter(Boolean).join(" ");
+      }
+      return h(realTag, props, ...renderDeckKids(kids, kidKeys, vals, ctx));
+    };
+  }
+
+  // src/logic.ts
+  var StreamableLogic = class {
+    constructor(props) {
+      __publicField(this, "props");
+      __publicField(this, "state", {});
+      /** Back-pointer to the wrapper component, installed after construction. */
+      __publicField(this, "__host");
+      this.props = props || {};
+    }
+    setState(update, cb) {
+      this.__host && this.__host.__setLogicState(update, cb);
+    }
+    forceUpdate() {
+      this.__host && this.__host.forceUpdate();
+    }
+    componentDidMount() {
+    }
+    componentDidUpdate(_prevProps) {
+    }
+    componentWillUnmount() {
+    }
+    /** The flat object the template renders against (merged over props). */
+    renderVals() {
+      return {};
+    }
+  };
+  function evalDcLogic(src) {
+    //! nosemgrep: eval-and-function-constructor
+    const fn = new Function(
+      "DCLogic",
+      "StreamableLogic",
+      "React",
+      src + '\n;return (typeof Component!=="undefined"&&Component)||undefined;'
+    );
+    return fn(StreamableLogic, StreamableLogic, getReact());
+  }
+
+  // src/component.ts
+  function shallowEqual(a, b) {
+    if (!b) return false;
+    const ak = Object.keys(a).filter((k) => k !== "children");
+    const bk = Object.keys(b).filter((k) => k !== "children");
+    if (ak.length !== bk.length) return false;
+    for (const k of ak) if (a[k] !== b[k]) return false;
+    return true;
+  }
+  function Placeholder({
+    name,
+    hintSize,
+    streaming,
+    error
+  }) {
+    const [w, hgt] = (hintSize || "100%,60px").split(",");
+    return h(
+      "div",
+      {
+        className: "sc-placeholder" + (streaming ? " sc-streaming" : ""),
+        style: { width: w.trim(), height: hgt && hgt.trim() },
+        title: name
+      },
+      error ? h(
+        "div",
+        { className: "sc-placeholder-error" },
+        (name ? name + ": " : "") + error
+      ) : null
+    );
+  }
+  function hintToMin(hint) {
+    if (!hint) return void 0;
+    const [w, hgt] = hint.split(",");
+    return { minWidth: w.trim(), minHeight: hgt && hgt.trim() };
+  }
+  function createComponentFactory(registry, ensureFetched) {
+    const React = getReact();
+    const AncestorContext = React.createContext([]);
+    class StreamableComponent extends React.Component {
+      constructor(props) {
+        super(props);
+        __publicField(this, "__name");
+        __publicField(this, "__sub");
+        __publicField(this, "__needsDidMount", false);
+        /** Snapshot of the registry's streaming flags taken at render time —
+         *  builders read it off the RenderCtx (this) to pick placeholder vs
+         *  render-nothing for unresolved values. */
+        __publicField(this, "__streamingNow", false);
+        __publicField(this, "__htmlStreamingNow", false);
+        /** When a construct throws, remember the (class, registry.ver, props)
+         *  triple so render-time reconcile doesn't re-attempt it on every parent
+         *  re-render. A registry bump (new class, template, external module
+         *  resolving via bumpAll) changes `ver` and breaks the memo so an
+         *  env-dependent constructor can self-heal. */
+        __publicField(this, "__failedLogic", null);
+        __publicField(this, "__failedUserProps", null);
+        __publicField(this, "__failedVer", -1);
+        /** Per-instance constructor error — kept here (not on the registry entry)
+         *  so one instance's successful construct can't hide a sibling's failure,
+         *  and a construct can never wipe an eval error `updateJs` recorded on
+         *  `r.logicError`. */
+        __publicField(this, "__ctorError", null);
+        __publicField(this, "logic");
+        this.__name = props.__name;
+        this.state = { __v: 0, __err: null };
+        this.__sub = () => {
+          if (this.state.__err) this.setState({ __err: null });
+          this.forceUpdate();
+        };
+        this.__makeLogic(registry.get(this.__name).Logic, null);
+        ensureFetched(this.__name);
+      }
+      /** Error-boundary hook: a render crash anywhere in this DC's subtree
+       *  (its own template, an x-import'd component, a child DC without its
+       *  own deeper boundary) lands here instead of unmounting the page. */
+      static getDerivedStateFromError(e) {
+        return { __err: e instanceof Error && e.message ? e.message : String(e) };
+      }
+      componentDidCatch(e, info) {
+        console.error(
+          "[dc-runtime] render error in <" + this.__name + ">:",
+          e,
+          info?.componentStack || ""
+        );
+      }
+      /** Instantiate the logic class (or the no-op base) and adopt `prevState`
+       *  over its initial state — used both at mount and on hot-swap. */
+      __makeLogic(Logic, prevState) {
+        const L = Logic || StreamableLogic;
+        try {
+          this.logic = new L(this.__userProps());
+          this.__failedLogic = null;
+          this.__failedUserProps = null;
+          this.__ctorError = null;
+        } catch (e) {
+          console.error(e);
+          this.__failedLogic = Logic;
+          this.__failedUserProps = this.__userProps();
+          this.__failedVer = registry.get(this.__name).ver;
+          this.__ctorError = this.__name + ": " + (e instanceof Error && e.message ? e.message : String(e));
+          this.logic = new StreamableLogic(
+            this.__userProps()
+          );
+        }
+        this.logic.__host = this;
+        if (prevState)
+          this.logic.state = { ...this.logic.state || {}, ...prevState };
+      }
+      /** The props the author's logic + template see — internal __-prefixed
+       *  wiring stripped. */
+      __userProps() {
+        const { __name, __hintSize, __tplId, __hostStyle, ...rest } = this.props;
+        return rest;
+      }
+      __setLogicState(update, cb) {
+        const prev = this.logic.state;
+        const patch = typeof update === "function" ? update(prev) : update;
+        this.logic.state = { ...prev, ...patch };
+        this.setState((s) => ({ __v: s.__v + 1 }), cb);
+      }
+      /** Swap the logic instance when the registry's Logic class changed
+       *  (streaming completion, hot reload). State carries over; didMount
+       *  re-fires after the swap commits so refs exist. */
+      __reconcileLogic() {
+        const r = registry.get(this.__name);
+        const Next = r.Logic;
+        const Cur = this.logic.constructor;
+        if (Next === Cur || !Next && Cur === StreamableLogic || Next === this.__failedLogic && r.ver === this.__failedVer && shallowEqual(this.__userProps(), this.__failedUserProps)) {
+          return;
+        }
+        if (!this.__needsDidMount) {
+          try {
+            this.logic.componentWillUnmount();
+          } catch (e) {
+            console.error(e);
+          }
+        }
+        this.__makeLogic(Next, this.logic.state);
+        this.__needsDidMount = true;
+      }
+      componentDidMount() {
+        registry.get(this.__name).subs.add(this.__sub);
+        try {
+          this.logic.componentDidMount();
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      componentDidUpdate(prevProps) {
+        this.logic.props = this.__userProps();
+        if (this.__needsDidMount) {
+          if (this.state.__err || !registry.get(this.__name).tpl) return;
+          this.__needsDidMount = false;
+          try {
+            this.logic.componentDidMount();
+          } catch (e) {
+            console.error(e);
+          }
+        } else {
+          try {
+            this.logic.componentDidUpdate(prevProps);
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      }
+      componentWillUnmount() {
+        registry.get(this.__name).subs.delete(this.__sub);
+        if (!this.__needsDidMount) {
+          try {
+            this.logic.componentWillUnmount();
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      }
+      render() {
+        const r = registry.get(this.__name);
+        const cls = "sc-host" + (r.htmlStreaming ? " sc-streaming-html" : "") + (r.jsStreaming ? " sc-streaming-js" : "");
+        const hintStyle = r.htmlStreaming ? hintToMin(this.props.__hintSize) : void 0;
+        const hostStyle = this.props.__hostStyle || hintStyle ? { ...hintStyle || {}, ...this.props.__hostStyle || {} } : void 0;
+        const hostBase = {
+          className: cls,
+          style: hostStyle,
+          "data-sc-name": this.__name,
+          "data-dc-tpl": this.props.__tplId
+        };
+        const chain = Array.isArray(this.context) ? this.context : [];
+        if (chain.includes(this.__name)) {
+          const cycle = [
+            ...chain.slice(chain.indexOf(this.__name)),
+            this.__name
+          ].join(" \u2192 ");
+          return h(
+            "div",
+            { ...hostBase, className: cls + " sc-has-error" },
+            h(Placeholder, {
+              name: this.__name,
+              hintSize: this.props.__hintSize,
+              error: "circular import: " + cycle
+            })
+          );
+        }
+        if (this.state.__err) {
+          return h(
+            "div",
+            { ...hostBase, className: cls + " sc-has-error" },
+            h(
+              "div",
+              { className: "sc-logic-error", "data-omelette-chrome": "" },
+              this.__name + ": " + this.state.__err
+            ),
+            h(Placeholder, {
+              name: this.__name,
+              hintSize: this.props.__hintSize,
+              error: this.state.__err
+            })
+          );
+        }
+        this.__reconcileLogic();
+        if (!r.tpl) {
+          return h(
+            "div",
+            hostBase,
+            h(Placeholder, { name: this.__name, hintSize: this.props.__hintSize })
+          );
+        }
+        const userProps = this.__userProps();
+        this.logic.props = userProps;
+        let vals = userProps;
+        let renderErr = r.logicError || this.__ctorError;
+        try {
+          vals = { ...userProps, ...this.logic.renderVals() || {} };
+        } catch (e) {
+          console.error(e);
+          renderErr = this.__name + ".renderVals(): " + (e instanceof Error && e.message ? e.message : String(e));
+        }
+        this.__streamingNow = !!(r.htmlStreaming || r.jsStreaming);
+        this.__htmlStreamingNow = !!r.htmlStreaming;
+        return h(
+          "div",
+          { ...hostBase, className: cls + (renderErr ? " sc-has-error" : "") },
+          renderErr && h(
+            "div",
+            { className: "sc-logic-error", "data-omelette-chrome": "" },
+            renderErr
+          ),
+          h(
+            AncestorContext.Provider,
+            { value: [...chain, this.__name] },
+            r.tpl(vals, this)
+          )
+        );
+      }
+    }
+    __publicField(StreamableComponent, "contextType", AncestorContext);
+    const named = /* @__PURE__ */ new Map();
+    function getDC(name) {
+      const hit = named.get(name);
+      if (hit) return hit;
+      function Dispatcher(p) {
+        const [, setTick] = React.useState(0);
+        React.useEffect(() => {
+          const sub = () => setTick((n) => n + 1);
+          registry.get(name).subs.add(sub);
+          return () => {
+            registry.get(name).subs.delete(sub);
+          };
+        }, []);
+        ensureFetched(name);
+        return h(StreamableComponent, { ...p, __name: name });
+      }
+      Dispatcher.displayName = name;
+      named.set(name, Dispatcher);
+      return Dispatcher;
+    }
+    return {
+      getDC,
+      StreamableComponent
+    };
+  }
+
+  // src/bundled.ts
+  function bundledBlob(url) {
+    const blobs = window.__resourceBlobs;
+    const b = blobs ? blobs[url.split("#")[0]] : void 0;
+    return b instanceof Blob ? b : null;
+  }
+
+  // src/cdn.ts
+  var REACT_URL = "https://unpkg.com/react@18.3.1/umd/react.production.min.js";
+  var REACT_SRI = "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z";
+  var REACT_DOM_URL = "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js";
+  var REACT_DOM_SRI = "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1";
+  var BABEL_URL = "https://unpkg.com/@babel/standalone@7.29.0/babel.min.js";
+  var BABEL_SRI = "sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y";
+  function cdnScriptFor(url, sri) {
+    const res = window.__resources;
+    const v = res ? res[url] : void 0;
+    return typeof v === "string" && v ? { src: v } : { src: url, integrity: sri };
+  }
+
+  // src/external.ts
+  var isCustomElementName = (n) => !n.includes(".") && n.includes("-");
+  function isRenderableType(g) {
+    if (typeof g === "function") return !isElementClass(g);
+    return typeof g === "object" && g !== null && typeof g.$$typeof === "symbol";
+  }
+  function resolveDottedPath(root, name) {
+    let cur = root;
+    for (const seg of name.split(".")) {
+      if (cur == null) return void 0;
+      cur = cur[seg];
+    }
+    return cur;
+  }
+  var GLOBAL_POLL_INTERVAL_MS = 50;
+  var GLOBAL_POLL_TIMEOUT_MS = 3e4;
+  function createExternalModules(onResolved) {
+    const cache = /* @__PURE__ */ new Map();
+    let babelLoading = null;
+    const reportedMissing = /* @__PURE__ */ new Map();
+    const polling = /* @__PURE__ */ new Set();
+    function ensureBabel() {
+      if (window.Babel) return Promise.resolve();
+      if (babelLoading) return babelLoading;
+      const babel = cdnScriptFor(BABEL_URL, BABEL_SRI);
+      babelLoading = new Promise((res, rej) => {
+        const s = document.createElement("script");
+        s.src = babel.src;
+        if (babel.integrity) {
+          s.integrity = babel.integrity;
+          s.crossOrigin = "anonymous";
+        }
+        s.onload = () => res();
+        s.onerror = rej;
+        document.head.appendChild(s);
+      });
+      return babelLoading;
+    }
+    const pending = /* @__PURE__ */ new Map();
+    function load(kind, url, after) {
+      const existing = pending.get(url);
+      if (existing) return existing;
+      cache.set(url, null);
+      console.info("[dc-runtime] x-import: loading", url, "(" + kind + ")");
+      const ready = Promise.all([
+        kind === "jsx" ? ensureBabel() : Promise.resolve(),
+        after ?? Promise.resolve()
+      ]);
+      const p = ready.then(() => {
+        const pre = bundledBlob(url);
+        if (pre) return pre.text();
+        return fetch(url).then((r) => {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.text();
+        });
+      }).then((src) => {
+        const code = kind === "jsx" ? window.Babel.transform(src, {
+          filename: url,
+          presets: ["react", "typescript"]
+        }).code : src;
+        const module = { exports: {} };
+        const before = new Set(Object.keys(window));
+        //! nosemgrep: eval-and-function-constructor
+        new Function("React", "module", "exports", "require", code)(
+          getReact(),
+          module,
+          module.exports,
+          () => ({})
+        );
+        const globals = {};
+        for (const k of Object.keys(window)) {
+          if (!before.has(k) && typeof window[k] === "function") {
+            globals[k] = window[k];
+          }
+        }
+        cache.set(url, { mod: module.exports, globals });
+        console.info(
+          "[dc-runtime] x-import: loaded",
+          url,
+          "\u2014 exports:",
+          Object.keys(module.exports),
+          "window globals:",
+          Object.keys(globals)
+        );
+        onResolved();
+      }).catch((e) => {
+        cache.set(url, {
+          mod: {},
+          globals: {},
+          error: "failed to load: " + (e instanceof Error && e.message ? e.message : String(e))
+        });
+        console.error(
+          "[dc-runtime] x-import: FAILED to load",
+          url,
+          "(" + kind + ")",
+          e
+        );
+        onResolved();
+      });
+      pending.set(url, p);
+      return p;
+    }
+    function resolve2(url, name) {
+      const entry = cache.get(url);
+      if (!entry) return null;
+      const { mod, globals } = entry;
+      const C = mod && mod[name] || globals && globals[name] || typeof window !== "undefined" && window[name] || mod && mod.default;
+      if (typeof C === "function") return C;
+      const key = url + "\0" + name;
+      if (!reportedMissing.has(key)) {
+        reportedMissing.set(
+          key,
+          entry.error || 'no export named "' + name + '" (has: ' + Object.keys(mod).join(", ") + ")"
+        );
+        console.error(
+          "[dc-runtime] x-import: module",
+          url,
+          "loaded but has no component named",
+          JSON.stringify(name),
+          "\u2014 available exports:",
+          Object.keys(mod),
+          "window globals:",
+          Object.keys(globals),
+          ". The module must `module.exports = {" + name + "}` or set `window." + name + "`."
+        );
+      }
+      return null;
+    }
+    function waitForGlobal(name) {
+      if (polling.has(name)) return;
+      polling.add(name);
+      const started = Date.now();
+      const isCE = isCustomElementName(name);
+      const tick = () => {
+        const found = isCE ? customElements.get(name) : isRenderableType(resolveDottedPath(window, name));
+        if (found) {
+          polling.delete(name);
+          onResolved();
+          return;
+        }
+        if (Date.now() - started >= GLOBAL_POLL_TIMEOUT_MS) {
+          console.warn(
+            "[dc-runtime] x-import: global",
+            JSON.stringify(name),
+            "never appeared on window after " + GLOBAL_POLL_TIMEOUT_MS + "ms"
+          );
+          return;
+        }
+        setTimeout(tick, GLOBAL_POLL_INTERVAL_MS);
+      };
+      setTimeout(tick, GLOBAL_POLL_INTERVAL_MS);
+    }
+    function resolveGlobal(url, name) {
+      const isCE = isCustomElementName(name);
+      if (!url) {
+        if (isCE) {
+          if (customElements.get(name)) return name;
+          waitForGlobal(name);
+          return null;
+        }
+        const g2 = resolveDottedPath(window, name);
+        if (isRenderableType(g2)) return g2;
+        waitForGlobal(name);
+        return null;
+      }
+      const entry = cache.get(url);
+      if (!entry) return null;
+      if (isCE && customElements.get(name)) return name;
+      const g = entry.globals[name] ?? resolveDottedPath(window, name);
+      if (isRenderableType(g)) return g;
+      if (name.includes(".")) return null;
+      const key = url + "\0global\0" + name;
+      if (!reportedMissing.has(key)) {
+        reportedMissing.set(key, null);
+        if (isCE && !customElements.get(name)) {
+          console.warn(
+            "[dc-runtime] x-import:",
+            url,
+            "loaded but no custom element",
+            JSON.stringify(name),
+            "is registered and window." + name + " is not a function \u2014 rendering <" + name + "> as an unknown element."
+          );
+        }
+      }
+      return name;
+    }
+    function getError(url, name) {
+      const entry = cache.get(url);
+      if (entry?.error) return entry.error;
+      return reportedMissing.get(url + "\0" + name) || null;
+    }
+    return { load, resolve: resolve2, resolveGlobal, getError };
+  }
+  function isElementClass(g) {
+    try {
+      return typeof g === "function" && typeof HTMLElement !== "undefined" && g.prototype instanceof HTMLElement;
+    } catch {
+      return false;
+    }
+  }
+
+  // src/atomics.ts
+  var ATOMIC_CSS = (
+    // layout
+    ".fx{display:flex}.col{display:flex;flex-direction:column}.grid{display:grid}.ac{align-items:center}.jc{justify-content:center}.jb{justify-content:space-between}.f1{flex:1}.noshrink{flex-shrink:0}.wrap{flex-wrap:wrap}.fw5{font-weight:500}.fw6{font-weight:600}.fw7{font-weight:700}.fw8{font-weight:800}.fs11{font-size:11px}.fs12{font-size:12px}.fs13{font-size:13px}.fs14{font-size:14px}.fs15{font-size:15px}.fs16{font-size:16px}.fs20{font-size:20px}.fs22{font-size:22px}.upper{text-transform:uppercase}.tc{text-align:center}.nowrap{white-space:nowrap}.gap8{gap:8px}.gap10{gap:10px}.gap12{gap:12px}.gap16{gap:16px}.gap24{gap:24px}.m0{margin:0}.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}.mb16{margin-bottom:16px}.posrel{position:relative}.posabs{position:absolute}.round{border-radius:50%}.ohide{overflow:hidden}.bbox{box-sizing:border-box}.pointer{cursor:pointer}.w100{width:100%}.b0{border:none}"
+  );
+
+  // src/helmet.ts
+  var DESIGN_DOC_MODE_RE = /<meta\b[^>]*\bname\s*=\s*["']design_doc_mode["'][^>]*\b(?:content|value)\s*=\s*["'](\w+)["']/i;
+  var CANVAS_BG_LIGHT = "#f0eee6";
+  var CANVAS_BG_DARK = "#2e2c26";
+  function createHelmetManager(doc, isStreaming) {
+    const mounted = /* @__PURE__ */ new Set();
+    const live = /* @__PURE__ */ new Map();
+    let designDocMode = null;
+    let canvasStyleEl = null;
+    let appTheme = "light";
+    try {
+      const ds = doc.documentElement.dataset.theme;
+      appTheme = ds === "dark" || ds === "light" ? ds : new URLSearchParams(doc.defaultView?.location.search ?? "").get(
+        "theme"
+      ) === "dark" ? "dark" : "light";
+    } catch {
+    }
+    function applyCanvasBg() {
+      if (!canvasStyleEl) return;
+      const bg = appTheme === "dark" ? CANVAS_BG_DARK : CANVAS_BG_LIGHT;
+      canvasStyleEl.textContent = `html,body{background:${bg}}#dc-root>.sc-host{position:relative}`;
+    }
+    function postDesignMode(mode) {
+      if (window.parent === window) return;
+      try {
+        window.parent.postMessage({ type: "__dc_design_mode", mode }, "*");
+      } catch {
+      }
+    }
+    function setDesignDocMode(mode) {
+      if (mode === designDocMode) return;
+      designDocMode = mode;
+      postDesignMode(mode);
+      if (mode === "canvas") {
+        doc.documentElement.setAttribute("data-dc-canvas", "");
+        canvasStyleEl = doc.createElement("style");
+        canvasStyleEl.setAttribute("data-dc-canvas", "");
+        applyCanvasBg();
+        doc.head.appendChild(canvasStyleEl);
+      } else {
+        doc.documentElement.removeAttribute("data-dc-canvas");
+        canvasStyleEl?.remove();
+        canvasStyleEl = null;
+      }
+    }
+    window.addEventListener("message", (e) => {
+      const type = e.data && e.data.type;
+      if (type === "__dc_theme") {
+        const t = e.data.theme;
+        if (t === "light" || t === "dark") {
+          appTheme = t;
+          applyCanvasBg();
+        }
+        return;
+      }
+      if (!designDocMode || type !== "__dc_probe") return;
+      postDesignMode(designDocMode);
+    });
+    function compile(node) {
+      const raw = [...node.children];
+      const helmetClosed = node.nextSibling != null || node.parentNode?.nextSibling != null;
+      if (node.hasAttribute("data-dc-atomics") && !mounted.has("__dc-atomics")) {
+        mounted.add("__dc-atomics");
+        const el = doc.createElement("style");
+        el.id = "__dc-atomics";
+        el.textContent = ATOMIC_CSS;
+        doc.head.appendChild(el);
+      }
+      return (_vals, ctx) => {
+        const name = ctx && ctx.__name || "";
+        const streaming = !!(name && isStreaming(name));
+        for (let i = 0; i < raw.length; i++) {
+          const child = raw[i];
+          const tag = child.tagName;
+          const mayBePartial = streaming && !helmetClosed && i === raw.length - 1;
+          if (tag === "SCRIPT") {
+            if (mayBePartial) continue;
+            const key = "SCRIPT|" + (child.getAttribute("src") || child.textContent || "");
+            if (mounted.has(key)) continue;
+            mounted.add(key);
+            const el = doc.createElement("script");
+            for (const { name: an, value } of [...child.attributes])
+              el.setAttribute(an, value);
+            if (child.textContent) el.textContent = child.textContent;
+            doc.head.appendChild(el);
+          } else if (tag === "LINK" || tag === "META") {
+            if (mayBePartial) continue;
+            const key = tag + "|" + (child.getAttribute("href") || child.getAttribute("src") || child.outerHTML);
+            if (mounted.has(key)) continue;
+            mounted.add(key);
+            if (tag === "LINK") {
+              const rel = (child.getAttribute("rel") || "").toLowerCase().split(/\s+/);
+              const href = (child.getAttribute("href") || "").trim();
+              const res = window.__resources;
+              const pre = res && rel.includes("stylesheet") && !rel.includes("alternate") ? res[href] : void 0;
+              const blob = typeof pre === "string" && pre ? bundledBlob(pre) : null;
+              if (blob) {
+                const el = doc.createElement("style");
+                if (child.hasAttribute("disabled")) {
+                  el.setAttribute("media", "not all");
+                } else if (child.getAttribute("media")) {
+                  el.setAttribute("media", child.getAttribute("media"));
+                }
+                if (child.getAttribute("title"))
+                  el.setAttribute("title", child.getAttribute("title"));
+                void blob.text().then((css) => {
+                  el.textContent = css;
+                });
+                doc.head.appendChild(el);
+                continue;
+              }
+            }
+            doc.head.appendChild(child.cloneNode(true));
+          } else {
+            const key = name + "|" + i;
+            let el = live.get(key);
+            if (!el || el.tagName !== tag) {
+              if (el) el.remove();
+              el = doc.createElement(tag.toLowerCase());
+              live.set(key, el);
+              doc.head.appendChild(el);
+            }
+            for (const { name: an, value } of [...child.attributes]) {
+              if (el.getAttribute(an) !== value) el.setAttribute(an, value);
+            }
+            if (el.textContent !== child.textContent)
+              el.textContent = child.textContent;
+          }
+        }
+        return null;
+      };
+    }
+    return { compile, setDesignDocMode };
+  }
+
+  // src/pseudo.ts
+  function scanUnquotedUrl(css, i) {
+    if (css[i] !== "u" && css[i] !== "U" || css.slice(i, i + 4).toLowerCase() !== "url(" || /[a-z0-9_-]/i.test(css[i - 1] ?? "")) {
+      return -1;
+    }
+    let j = i + 4;
+    while (j < css.length && /\s/.test(css[j])) j++;
+    if (css[j] === '"' || css[j] === "'") return -1;
+    while (j < css.length && css[j] !== ")") {
+      if (css[j] === "\\") j++;
+      j++;
+    }
+    return j < css.length ? j + 1 : css.length;
+  }
+  function stripComments(css) {
+    let out = "";
+    let quote = "";
+    for (let i = 0; i < css.length; i++) {
+      const c = css[i];
+      if (quote) {
+        if (c === "\\") {
+          out += c + (css[i + 1] ?? "");
+          i++;
+          continue;
+        }
+        if (c === quote) quote = "";
+        out += c;
+      } else if (c === "'" || c === '"') {
+        quote = c;
+        out += c;
+      } else if (c === "/" && css[i + 1] === "*") {
+        const end = css.indexOf("*/", i + 2);
+        i = end === -1 ? css.length : end + 1;
+        out += " ";
+      } else {
+        const end = scanUnquotedUrl(css, i);
+        if (end === -1) out += c;
+        else {
+          out += css.slice(i, end);
+          i = end - 1;
+        }
+      }
+    }
+    return out;
+  }
+  function importantify(css) {
+    css = stripComments(css);
+    const decls = [];
+    let start = 0;
+    let depth = 0;
+    let quote = "";
+    for (let i = 0; i < css.length; i++) {
+      const c = css[i];
+      if (quote) {
+        if (c === "\\") i++;
+        else if (c === quote) quote = "";
+      } else if (c === "'" || c === '"') quote = c;
+      else if (c === "(") depth++;
+      else if (c === ")") depth = Math.max(0, depth - 1);
+      else if (c === ";" && depth === 0) {
+        decls.push(css.slice(start, i));
+        start = i + 1;
+      } else {
+        const end = scanUnquotedUrl(css, i);
+        if (end !== -1) i = end - 1;
+      }
+    }
+    decls.push(css.slice(start));
+    return decls.map((d) => d.trim()).filter(Boolean).map((d) => /!\s*important$/i.test(d) ? d : d + " !important").join(";");
+  }
+  function createPseudoSheet(doc) {
+    let el = null;
+    const cache = /* @__PURE__ */ new Map();
+    let n = 0;
+    return (pseudo, css) => {
+      const k = pseudo + "|" + css;
+      const hit = cache.get(k);
+      if (hit) return hit;
+      if (!el) {
+        el = doc.createElement("style");
+        doc.head.appendChild(el);
+      }
+      const cls = "scp" + (n++).toString(36);
+      const isPseudoElement = pseudo === "before" || pseudo === "after";
+      const sel = isPseudoElement ? "." + cls + "::" + pseudo : "." + cls + ":" + pseudo;
+      el.sheet.insertRule(
+        sel + "{" + (isPseudoElement ? css : importantify(css)) + "}",
+        el.sheet.cssRules.length
+      );
+      cache.set(k, cls);
+      return cls;
+    };
+  }
+
+  // src/registry.ts
+  function createRegistry() {
+    const entries = /* @__PURE__ */ Object.create(null);
+    function get(name) {
+      return entries[name] || (entries[name] = {
+        html: "",
+        tpl: null,
+        Logic: null,
+        jsStreaming: false,
+        htmlStreaming: false,
+        ver: 0,
+        subs: /* @__PURE__ */ new Set(),
+        fetched: false
+      });
+    }
+    function bump(name) {
+      const r = get(name);
+      r.ver++;
+      for (const fn of r.subs) fn();
+    }
+    return {
+      entries,
+      get,
+      bump,
+      bumpAll() {
+        for (const n in entries) bump(n);
+      }
+    };
+  }
+
+  // src/runtime.ts
+  var COMPONENT_DIR = ".";
+  function createRuntime(doc = document) {
+    const registry = createRegistry();
+    const pseudoClass = createPseudoSheet(doc);
+    const helmet = createHelmetManager(
+      doc,
+      (name) => registry.get(name).htmlStreaming
+    );
+    const external = createExternalModules(() => registry.bumpAll());
+    const factory = createComponentFactory(registry, ensureFetched);
+    const host = {
+      component: (name) => factory.getDC(name),
+      placeholder: (props) => h(Placeholder, props),
+      helmet: (node) => helmet.compile(node),
+      loadExternal: (kind, url, after) => external.load(kind, url, after),
+      resolveExternal: (url, name) => external.resolve(url, name),
+      resolveExternalGlobal: (url, name) => external.resolveGlobal(url, name),
+      resolveExternalError: (url, name) => external.getError(url, name),
+      pseudoClass
+    };
+    function ensureFetched(name) {
+      const r = registry.get(name);
+      if (r.fetched) return;
+      r.fetched = true;
+      const url = COMPONENT_DIR + "/" + encodeURIComponent(name) + ".dc.html";
+      const res = window.__resources;
+      const pre = res ? res[url] : void 0;
+      const target = typeof pre === "string" && pre ? pre : url;
+      const blob = bundledBlob(target);
+      (blob ? blob.text() : fetch(target).then((res2) => {
+        if (!res2.ok) {
+          console.error(
+            '[dc-runtime] sibling fetch for "' + name + '" failed:',
+            url,
+            "returned",
+            res2.status,
+            "\u2014 the reference renders as an empty placeholder."
+          );
+          return "";
+        }
+        return res2.text();
+      })).then((t) => {
+        if (!t) return;
+        const parsed = parseDcText(t);
+        if (!parsed) {
+          console.error(
+            '[dc-runtime] sibling fetch for "' + name + '":',
+            url,
+            "has no <x-dc> block \u2014 not a Design Component."
+          );
+          return;
+        }
+        if (parsed.props) r.propsMeta = parsed.props;
+        if (parsed.preview) r.preview = parsed.preview;
+        if (parsed.template && !r.html) updateHtml(name, parsed.template);
+        if (parsed.js && !r.Logic) updateJs(name, parsed.js);
+      }).catch(
+        (e) => console.error(
+          '[dc-runtime] sibling fetch for "' + name + '" threw:',
+          url,
+          e
+        )
+      );
+    }
+    let rootName = null;
+    function updateHtml(name, html) {
+      const r = registry.get(name);
+      r.html = html;
+      if (name === rootName) {
+        const mode = DESIGN_DOC_MODE_RE.exec(html)?.[1] ?? null;
+        if (mode || !r.htmlStreaming) helmet.setDesignDocMode(mode);
+      }
+      try {
+        r.tpl = compileTemplate(html, host);
+      } catch (e) {
+        console.error("[dc-runtime] template compile FAILED for", name, e);
+      }
+      registry.bump(name);
+    }
+    function updateJs(name, src) {
+      const r = registry.get(name);
+      const seq = r.jsSeq = (r.jsSeq || 0) + 1;
+      try {
+        const Cls = evalDcLogic(src);
+        if (r.jsSeq !== seq) return;
+        if (typeof Cls !== "function") {
+          r.logicError = name + ".dc.html: <script data-dc-script> must define `class Component extends DCLogic`";
+        } else {
+          r.logicError = null;
+          r.Logic = Cls;
+        }
+      } catch (e) {
+        if (r.jsSeq !== seq) return;
+        console.error(
+          "[dc-runtime] logic class eval FAILED for",
+          name,
+          "\u2014 the template renders with props only.",
+          e
+        );
+        r.logicError = name + ": " + (e instanceof Error && e.message ? e.message : String(e));
+      }
+      registry.bump(name);
+    }
+    function setStreaming(name, kind, on) {
+      const r = registry.get(name);
+      if (kind === "html") r.htmlStreaming = !!on;
+      else r.jsStreaming = !!on;
+      let any = false;
+      for (const n in registry.entries) {
+        const e = registry.entries[n];
+        if (e && (e.htmlStreaming || e.jsStreaming)) {
+          any = true;
+          break;
+        }
+      }
+      doc.documentElement.classList.toggle("sc-dc-streaming", any);
+      registry.bump(name);
+    }
+    function dcUpdate(name, kind, content, streaming) {
+      if (streaming) registry.get(name).fetched = true;
+      if (kind === "html") {
+        setStreaming(name, "html", !!streaming);
+        updateHtml(name, content);
+      } else if (kind === "js") {
+        setStreaming(name, "js", !!streaming);
+        if (!streaming) updateJs(name, content);
+      } else if (kind === "props") {
+        const { props, preview } = parseDataProps(content);
+        const r = registry.get(name);
+        r.propsMeta = props ?? void 0;
+        r.preview = preview;
+        registry.bump(name);
+      }
+    }
+    function setProps(name, overrides) {
+      registry.get(name).propOverrides = overrides && typeof overrides === "object" ? { ...overrides } : null;
+      registry.bump(name);
+    }
+    function adoptParsed(name, parsed) {
+      if (!parsed) return;
+      const r = registry.get(name);
+      if (parsed.props) r.propsMeta = parsed.props;
+      if (parsed.preview) r.preview = parsed.preview;
+      if (parsed.template) updateHtml(name, parsed.template);
+      if (parsed.js) updateJs(name, parsed.js);
+    }
+    return {
+      registry,
+      getDC: factory.getDC,
+      updateHtml,
+      updateJs,
+      dcUpdate,
+      setProps,
+      adoptParsed,
+      setRootName: (name) => {
+        rootName = name;
+      },
+      markFetched: (name) => {
+        registry.get(name).fetched = true;
+      },
+      annotatedTemplate: (name) => {
+        const r = registry.get(name);
+        return r.tpl && r.tpl.__annotated || null;
+      },
+      templateSource: (name) => registry.get(name).html || null,
+      StreamableLogic
+    };
+  }
+
+  // src/stream-state.ts
+  function createStreamTracker(staleMs = 6e4, now = Date.now) {
+    const since = /* @__PURE__ */ new Map();
+    const liveOne = (n) => {
+      const t = since.get(n);
+      if (t === void 0) return false;
+      if (now() - t > staleMs) {
+        since.delete(n);
+        return false;
+      }
+      return true;
+    };
+    return {
+      push(name, streaming, viewportKey) {
+        if (viewportKey === "dc-model") return;
+        if (streaming) since.set(name, now());
+        else since.delete(name);
+      },
+      live(name) {
+        if (name !== void 0) return liveOne(name);
+        for (const n of [...since.keys()]) if (liveOne(n)) return true;
+        return false;
+      }
+    };
+  }
+
+  // src/index.ts
+  function hideRawTemplate() {
+    const s = document.createElement("style");
+    s.textContent = "x-dc{display:none!important}";
+    document.head.appendChild(s);
+  }
+  function loadScript(src, integrity) {
+    return new Promise((resolve2, reject) => {
+      //! nosemgrep: create-script-element
+      const s = document.createElement("script");
+      s.src = src;
+      if (integrity) {
+        s.integrity = integrity;
+        s.crossOrigin = "anonymous";
+      }
+      s.async = false;
+      s.onload = () => resolve2();
+      s.onerror = () => reject(new Error(`failed to load ${src}`));
+      document.head.appendChild(s);
+    });
+  }
+  function loadReactUmd() {
+    const w = window;
+    if (w.React && w.ReactDOM) return Promise.resolve();
+    const react = cdnScriptFor(REACT_URL, REACT_SRI);
+    const reactDom = cdnScriptFor(REACT_DOM_URL, REACT_DOM_SRI);
+    return Promise.all([
+      loadScript(react.src, react.integrity),
+      loadScript(reactDom.src, reactDom.integrity)
+    ]).then(() => void 0);
+  }
+  function init() {
+    const runtime = createRuntime(document);
+    let rootName = "Root";
+    const baseCss = document.createElement("style");
+    baseCss.textContent = BASE_CSS;
+    document.head.prepend(baseCss);
+    const notifyHost = () => {
+      if (window.parent === window) return;
+      const r = runtime.registry.entries[rootName];
+      try {
+        window.parent.postMessage(
+          {
+            type: "__dc_booted",
+            rootName,
+            propsMeta: r && r.propsMeta || null,
+            preview: r && r.preview || null
+          },
+          "*"
+        );
+      } catch {
+      }
+    };
+    const streams = createStreamTracker();
+    const api = {
+      __dcUpdate: (name, kind, content, streaming, viewportKey) => {
+        streams.push(name, streaming, viewportKey);
+        runtime.dcUpdate(name, kind, content, streaming);
+        if (name === rootName && !streaming && kind === "props") notifyHost();
+      },
+      __dcStreaming: (name) => streams.live(name),
+      __dcSetProps: (name, overrides) => runtime.setProps(name, overrides),
+      /** Name of the component currently mounted as the page root — DC tools
+       *  push their template-stream here when targeting "the open page". */
+      __dcRootName: () => rootName,
+      /** Editor bridge — the encoded, `data-dc-tpl`-annotated template source.
+       *  The host editor parses this into its own template DOM so it can map a
+       *  rendered node (carrying the same `data-dc-tpl`) back to the source
+       *  node that emitted it. Returns the encoded form (`sc-camel-*` attrs,
+       *  `<sc-raw-*>`/`<sc-helmet>` tags); the editor decodes on serialize. */
+      __dcAnnotatedTemplate: (name) => runtime.annotatedTemplate(name),
+      /** Editor bridge — the *original* (decoded) template source. */
+      __dcTemplateSource: (name) => runtime.templateSource(name),
+      __dcBoot: () => {
+        rootName = boot(runtime, document) ?? rootName;
+        notifyHost();
+      },
+      __dcRegistry: runtime.registry.entries,
+      getDC: (name) => runtime.getDC(name),
+      // `DCLogic` is the documented base class name; `StreamableLogic` is the
+      // implementation alias kept for any project that already references it.
+      DCLogic: runtime.StreamableLogic,
+      StreamableLogic: runtime.StreamableLogic
+    };
+    Object.assign(window, api);
+    window.__dcContentKeyed = true;
+    if (document.readyState !== "loading") api.__dcBoot();
+    else document.addEventListener("DOMContentLoaded", () => api.__dcBoot());
+  }
+  hideRawTemplate();
+  loadReactUmd().then(init).catch((err) => {
+    console.error("[dc] failed to load React or boot:", err);
+    throw err;
+  });
+})();
+
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/Hero.dc.html" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+    }
+  ]
+}
