@@ -1,9 +1,0 @@
-{
-  "name": "theworstcurse",
-  "version": "1.0.0",
-  "private": true,
-  "description": "theworstcurse.net — curse storefront with Stripe payments",
-  "dependencies": {
-    "stripe": "^16.12.0"
-  }
-}
